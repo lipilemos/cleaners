@@ -2,7 +2,7 @@
 
 Este arquivo direciona qualquer trabalho feito neste repositório com Claude Code. Ele descreve o domínio do produto, a stack, a arquitetura esperada e os padrões de código Angular que **devem** ser seguidos. Os agentes, skills e comandos referenciados aqui vivem em [.claude/agents](.claude/agents), [.claude/skills](.claude/skills) e [.claude/commands](.claude/commands).
 
-> Estado atual: este repositório contém apenas os padrões de desenvolvimento (.claude/) e este CLAUDE.md. O workspace Nx/Angular ainda não foi criado. Ao iniciar o projeto (`npx create-nx-workspace`), mantenha as convenções descritas abaixo.
+> Estado atual: este repositório contém apenas os padrões de desenvolvimento (.claude/), este CLAUDE.md e o plano de tarefas ([TASKS.md](TASKS.md)). O workspace Nx/Angular ainda não foi criado. Ao iniciar o projeto (`npx create-nx-workspace`), mantenha as convenções descritas abaixo. O backend já teve o scaffold inicial criado em paralelo — ver seção 1.1.
 
 ## 1. Visão geral do produto
 
@@ -35,7 +35,7 @@ Entidades de domínio centrais (nomes a usar de forma consistente no código):
 
 Este repositório contém **apenas o frontend**. Toda regra de negócio, persistência e autenticação vivem em uma **API separada, em repositório próprio**:
 
-- **Backend**: .NET Core (C#), em outro repositório (não neste).
+- **Backend**: .NET Core (C#), em outro repositório (não neste) — **[lipilemos/cleaners-api](https://github.com/lipilemos/cleaners-api)** (privado). Estrutura em Clean Architecture (`Domain`/`Application`/`Infrastructure`/`Api`); ver `README.md` e `TASKS.md` desse repositório para arquitetura e plano de implementação em andamento. Ao planejar uma feature que depende de um endpoint novo (ver marcações 🔗 **API** no [TASKS.md](TASKS.md) deste repositório), verifique o `TASKS.md` do `cleaners-api` para desenvolver em par — o endpoint e o consumo no Angular tendem a evoluir juntos.
 - **Banco de dados**: gerenciado inteiramente pelo backend .NET; o Angular nunca acessa dados diretamente, sempre via a API HTTP.
 - **Regra de negócio**: decisões que dependem de fonte de verdade do servidor (confirmação de agendamento, disponibilidade real, vínculo de review a booking concluído) são resolvidas pela API .NET. O Angular pode replicar cálculos simples só para exibição/derivação de UI (ex.: média de estrelas a partir de uma lista já recebida), mas **nunca decide sozinho** se uma ação é permitida.
 - **Autenticação**: JWT emitido pela API .NET e entregue como **cookie `httpOnly`, `Secure`, `SameSite`** — nunca como token manipulável por JavaScript (nem `localStorage`, nem header montado manualmente). Ver seção 6.1.
