@@ -1,0 +1,98 @@
+{
+  "login": {
+    "title": "Iniciar sesión en el portal del profesional",
+    "registerLink": "¿No tienes cuenta? Crear cuenta de profesional"
+  },
+  "register": {
+    "title": "Crear cuenta de profesional",
+    "loginLink": "¿Ya tienes cuenta? Iniciar sesión"
+  },
+  "portalToolbar": {
+    "welcomeTitle": "¡Hola, {{name}}!",
+    "availabilityLink": "Disponibilidad",
+    "incomingBookingsLink": "Pedidos recibidos",
+    "reviewsReceivedLink": "Reseñas",
+    "professionalProfileLink": "Mis servicios",
+    "logoutButton": "Cerrar sesión"
+  },
+  "availability": {
+    "title": "Disponibilidad",
+    "connectionTitle": "Google Calendar",
+    "connectionLoadingMessage": "Comprobando la conexión con tu calendario...",
+    "connectedMessage": "Tu Google Calendar está conectado.",
+    "notConnectedMessage": "Tu Google Calendar aún no está conectado. Conéctalo para recibir pedidos de reserva.",
+    "connectionLoadErrorMessage": "No pudimos comprobar la conexión con tu calendario.",
+    "connectButton": "Conectar Google Calendar",
+    "connectionStartErrorMessage": "No pudimos iniciar la conexión con Google Calendar. Inténtalo de nuevo.",
+    "rulesTitle": "Días y horarios de trabajo",
+    "rulesLoadingMessage": "Cargando tus reglas de disponibilidad...",
+    "rulesLoadErrorMessage": "No pudimos cargar tus reglas de disponibilidad.",
+    "startTimeLabel": "Inicio",
+    "endTimeLabel": "Fin",
+    "invalidTimeRangeError": "La hora de inicio debe ser anterior a la hora de fin.",
+    "rulesSaveErrorMessage": "No pudimos guardar tus reglas de disponibilidad. Inténtalo de nuevo.",
+    "rulesSaveSuccessMessage": "Disponibilidad actualizada con éxito.",
+    "days": {
+      "sunday": "Domingo",
+      "monday": "Lunes",
+      "tuesday": "Martes",
+      "wednesday": "Miércoles",
+      "thursday": "Jueves",
+      "friday": "Viernes",
+      "saturday": "Sábado"
+    }
+  },
+  "incomingBookings": {
+    "title": "Pedidos de reserva",
+    "loadingMessage": "Cargando tus reservas...",
+    "loadErrorMessage": "No pudimos cargar tus reservas.",
+    "pendingTabLabel": "Pendientes ({{count}})",
+    "emptyPendingMessage": "No hay pedidos pendientes por el momento.",
+    "acceptButton": "Aceptar",
+    "rejectButton": "Rechazar",
+    "acceptErrorMessage": "No pudimos aceptar esta reserva. Inténtalo de nuevo.",
+    "rejectErrorMessage": "No pudimos rechazar esta reserva. Inténtalo de nuevo.",
+    "confirmedTabLabel": "Confirmadas",
+    "emptyConfirmedMessage": "No hay reservas confirmadas por el momento.",
+    "contactTitle": "Contacto del cliente",
+    "callButtonAriaLabel": "Llamar a {{name}}",
+    "historyTabLabel": "Historial",
+    "emptyHistoryMessage": "Aún no hay reservas completadas o canceladas.",
+    "statusLabel": "Estado"
+  },
+  "bookingStatus": {
+    "pending": "Esperando confirmación",
+    "confirmed": "Confirmado",
+    "completed": "Completado",
+    "cancelled": "Cancelado"
+  },
+  "reviewsReceived": {
+    "title": "Reseñas recibidas",
+    "loadingMessage": "Cargando tus reseñas...",
+    "loadErrorMessage": "No pudimos cargar tus reseñas.",
+    "reviewCountLabel": "{{count}} reseñas",
+    "emptyMessage": "Todavía no has recibido reseñas."
+  },
+  "professionalProfile": {
+    "title": "Mis servicios",
+    "loadingMessage": "Cargando tus servicios...",
+    "loadErrorMessage": "No pudimos cargar tus servicios.",
+    "addTitle": "Agregar servicio",
+    "nameLabel": "Nombre del servicio",
+    "descriptionLabel": "Descripción",
+    "priceFromLabel": "Precio a partir de",
+    "durationMinutesLabel": "Duración (minutos)",
+    "addButton": "Agregar",
+    "addErrorMessage": "No pudimos agregar este servicio. Inténtalo de nuevo.",
+    "addSuccessMessage": "Servicio agregado con éxito.",
+    "servicesTitle": "Servicios ofrecidos",
+    "emptyMessage": "Todavía no has agregado ningún servicio.",
+    "priceFromDisplay": "A partir de {{price}}",
+    "durationDisplay": "{{minutes}} min",
+    "editButton": "Editar",
+    "removeButton": "Eliminar",
+    "editDialogTitle": "Editar servicio",
+    "updateErrorMessage": "No pudimos guardar los cambios de este servicio. Inténtalo de nuevo.",
+    "removeErrorMessage": "No pudimos eliminar este servicio. Inténtalo de nuevo."
+  }
+}

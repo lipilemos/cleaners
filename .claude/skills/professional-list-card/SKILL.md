@@ -1,22 +1,25 @@
 ---
 name: professional-list-card
-description: Use ao implementar a tela/lista de profissionais que o usuário vê após o login — cards com foto, serviços, nota em estrelas e ordenação por proximidade. Cobre o modelo de dados, o padrão de busca por geolocalização e a divisão de responsabilidades entre o container da lista e o componente de card.
+description: Use ao implementar a tela/lista de profissionais que o usuário vê após o login — cards com foto, serviços, nota em estrelas e busca por cidade/nome. Cobre o modelo de dados, o padrão de busca por geolocalização (com geocoding reverso para cidade) e a divisão de responsabilidades entre o container da lista e o componente de card.
 ---
 
 # Lista de profissionais próximos (cards)
 
-Esta é a tela inicial pós-login do `client-app` (ver CLAUDE.md seção 1.2 — o `professional-portal` não tem essa tela). Define como estruturar a busca por proximidade, o carregamento e a exibição dos cards.
+Esta é a tela inicial pós-login do `client-app` (ver CLAUDE.md seção 1.2 — o `professional-portal` não tem essa tela). Define como estruturar a busca por cidade/nome, o carregamento e a exibição dos cards.
 
 ## Divisão de responsabilidades
 
 ```
+apps/client-app/src/app/core/geolocation/
+  reverse-geocoding.service.ts           # HTTP a serviço externo (Nominatim/OSM): resolve cidade a partir de um GeoPoint
+
 apps/client-app/src/app/features/professionals-list/
-  professionals-list.component.ts       # container: busca geolocalização, chama service, gerencia estado de loading/erro
+  professionals-list.component.ts       # container: busca geolocalização, resolve cidade, chama service, gerencia estado de loading/erro
   professionals-list.component.html
-  professionals-list.store.ts            # estado da feature (signals): lista, filtro, loading, erro
+  professionals-list.store.ts            # estado da feature (signals): busca (cidade/termo digitado), lista, loading, erro
 
 libs/shared/data-access/
-  professionals.service.ts               # HTTP: getNearby(lat, lng, radiusKm) — reaproveitável pelo professional-portal (ex.: ver o próprio perfil)
+  professionals.service.ts               # HTTP: search(term) — busca por nome ou cidade, reaproveitável pelo professional-portal (ex.: ver o próprio perfil)
 
 libs/shared/ui/professional-card/
   professional-card.component.ts         # apresentacional puro sobre MatCard: recebe um ViewModel, sem HTTP, sem geolocalização
@@ -50,18 +53,19 @@ export interface ProfessionalCardViewModel {
   name: string;
   photoUrl: string;
   serviceNames: string[];
-  averageRating: number;   // computed a partir de reviews, nunca vindo pronto e editável
+  averageRating: number; // computed a partir de reviews, nunca vindo pronto e editável
   reviewCount: number;
-  distanceKm: number;      // computed no container a partir da geolocalização do usuário
+  distanceKm: number; // computed no container a partir da geolocalização do usuário
 }
 ```
 
-## Geolocalização
+## Geolocalização e busca
 
 1. Solicitar `navigator.geolocation.getCurrentPosition` no container, encapsulado em um pequeno service (`GeolocationService`) em `apps/client-app/src/app/core/` — nunca chamar a API do browser direto no componente, para facilitar teste e fallback.
-2. Sempre tratar os três estados: permissão concedida, permissão negada, indisponível. Em caso de negada/indisponível, oferecer fallback de digitar um endereço/CEP manualmente — nunca deixar a lista travada sem opção.
-3. O cálculo de distância (haversine ou equivalente) fica em uma função pura testável em `libs/shared/util/geo.ts`, nunca inline no componente ou no template.
-4. A ordenação por distância é feita no backend quando possível (`getNearby(lat, lng, radiusKm)` já retorna ordenado); o frontend não deve reordenar silenciosamente uma lista que o backend já ordenou de forma diferente.
+2. Sempre tratar os três estados: permissão concedida, permissão negada, indisponível. Em caso de negada/indisponível, oferecer fallback de digitar lat/lng manualmente — nunca deixar a lista travada sem opção.
+3. A posição resolvida (automática ou manual) nunca é enviada como lat/lng cru ao backend: `ReverseGeocodingService` (client-side, Nominatim/OpenStreetMap) resolve a cidade a partir do `GeoPoint`, e essa cidade vira o termo inicial de busca.
+4. A busca em si (`ProfessionalsService.search(term)`) é sempre feita pelo backend (nome **ou** cidade, ver CLAUDE.md seção 1.3); o frontend não filtra localmente uma lista já carregada. A store dispara uma nova busca tanto na resolução inicial da cidade quanto a cada mudança do termo digitado (com debounce), usando `switchMap` para descartar respostas de buscas obsoletas.
+5. `haversineDistanceKm` (`libs/shared/util/geo.ts`) fica disponível para exibir `distanceKm` no card **quando** a API vier a expor coordenadas do profissional; hoje a ordenação/filtragem por proximidade não é mais feita, então esse campo permanece opcional/ausente.
 
 ## Estado de carregamento
 

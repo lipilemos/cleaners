@@ -1,0 +1,13 @@
+{
+  "title": "Create account",
+  "nameLabel": "Name",
+  "emailLabel": "Email",
+  "phoneLabel": "Phone",
+  "passwordLabel": "Password",
+  "confirmPasswordLabel": "Confirm password",
+  "submitButton": "Create account",
+  "loadingLabel": "Creating account...",
+  "passwordMismatchMessage": "Passwords don't match.",
+  "emailAlreadyRegisteredMessage": "An account with this email already exists.",
+  "genericErrorMessage": "We couldn't create your account. Please try again."
+}

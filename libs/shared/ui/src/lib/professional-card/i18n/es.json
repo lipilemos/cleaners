@@ -1,0 +1,7 @@
+{
+  "featuredBadge": "Destacado",
+  "distanceLabel": "A {{distance}} km de ti",
+  "cityLabel": "{{city}}, {{state}}",
+  "servicesAriaLabel": "Servicios ofrecidos",
+  "reviewCountLabel": "{{count}} reseñas"
+}

@@ -1,0 +1,46 @@
+<mat-toolbar color="primary" class="portal-toolbar">
+  <span class="portal-toolbar__welcome">{{
+    'portalToolbar.welcomeTitle' | transloco: { name: accountName() }
+  }}</span>
+
+  <nav class="portal-toolbar__nav">
+    <a
+      mat-button
+      type="button"
+      routerLink="/availability"
+      routerLinkActive="portal-toolbar__link--active"
+    >
+      {{ 'portalToolbar.availabilityLink' | transloco }}
+    </a>
+    <a
+      mat-button
+      type="button"
+      routerLink="/incoming-bookings"
+      routerLinkActive="portal-toolbar__link--active"
+    >
+      {{ 'portalToolbar.incomingBookingsLink' | transloco }}
+    </a>
+    <a
+      mat-button
+      type="button"
+      routerLink="/reviews-received"
+      routerLinkActive="portal-toolbar__link--active"
+    >
+      {{ 'portalToolbar.reviewsReceivedLink' | transloco }}
+    </a>
+    <a
+      mat-button
+      type="button"
+      routerLink="/professional-profile"
+      routerLinkActive="portal-toolbar__link--active"
+    >
+      {{ 'portalToolbar.professionalProfileLink' | transloco }}
+    </a>
+  </nav>
+
+  <span class="portal-toolbar__spacer"></span>
+
+  <button mat-stroked-button type="button" color="accent" (click)="logout()">
+    {{ 'portalToolbar.logoutButton' | transloco }}
+  </button>
+</mat-toolbar>

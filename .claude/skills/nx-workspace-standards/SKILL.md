@@ -1,6 +1,6 @@
 ---
 name: nx-workspace-standards
-description: Use ao criar uma nova lib/app no monorepo Nx do CleanersApp, ao configurar tooling (lint, format, commits, CI), ou ao decidir onde um arquivo deve morar entre apps/client-app, apps/professional-portal e libs/shared/*. Cobre module boundaries, convenção de tags e o pipeline mínimo de qualidade.
+description: Use ao criar uma nova lib/app no monorepo Nx do CleanersApp, ao configurar tooling (format, commits, CI), ou ao decidir onde um arquivo deve morar entre apps/client-app, apps/professional-portal e libs/shared/*. Cobre module boundaries, convenção de tags e o pipeline mínimo de qualidade.
 ---
 
 # Padrões do workspace Nx
@@ -29,7 +29,7 @@ Cada projeto Nx (app ou lib) declara tags em `project.json`:
 - `scope:client` | `scope:professional` | `scope:shared`
 - `type:app` | `type:feature` | `type:ui` | `type:data-access` | `type:util` | `type:models` | `type:auth`
 
-Regra de ESLint (`@nx/enforce-module-boundaries`) a manter configurada em `.eslintrc.json` na raiz:
+Regras a respeitar (sem enforcement automatizado — ver nota abaixo):
 
 - `scope:shared` nunca depende de `scope:client` ou `scope:professional`.
 - `type:ui` não depende de `type:data-access` (componentes de apresentação não fazem HTTP).
@@ -37,24 +37,22 @@ Regra de ESLint (`@nx/enforce-module-boundaries`) a manter configurada em `.esli
 - `type:util` e `type:models` não dependem de nada além de outras libs `type:util`/`type:models`.
 - Apps (`type:app`) podem depender de qualquer lib `scope:shared`, mas nenhuma lib depende de um app.
 
-Uma violação de boundary é **erro de lint**, não aviso — tratar como bloqueante em qualquer revisão (ver agente `angular-code-reviewer`).
+Este projeto não usa ESLint (decisão explícita, ver `CLAUDE.md` seção 2) — não há `@nx/enforce-module-boundaries` nem qualquer outra regra de lint configurada. Uma violação de boundary só é pega na revisão (agente `angular-code-reviewer` / comando `/review-angular`) ou visualmente via `nx graph`; tratar como bloqueante com o mesmo rigor de um erro de build.
 
 ## Tooling obrigatório
 
-- **ESLint** (`@nx/eslint-plugin` + regras Angular) — inclui a regra de module boundaries acima.
 - **Prettier** com config única na raiz do workspace, aplicada a todos os projetos (sem config divergente por app).
-- **Husky + lint-staged**: hook de `pre-commit` rodando lint+format apenas nos arquivos staged.
+- **Husky + lint-staged**: hook de `pre-commit` rodando format (Prettier) apenas nos arquivos staged.
 - **commitlint** com Conventional Commits (`feat:`, `fix:`, `chore:`, `refactor:`, `test:`, `docs:`) — hook de `commit-msg`.
-- Rodar tudo via `nx affected` (`nx affected --target=lint`, `nx affected --target=test`) em vez de rodar em todo o workspace a cada commit, para manter o ciclo rápido.
+- Rodar `nx affected --target=test` em vez de rodar em todo o workspace a cada commit, para manter o ciclo rápido.
 
 ## CI mínimo (GitHub Actions)
 
 Pipeline mínimo antes de permitir merge:
 
-1. `nx affected --target=lint`
-2. `nx affected --target=test`
-3. `nx affected --target=build`
-4. (opcional, quando e2e existir) `nx affected --target=e2e`
+1. `nx affected --target=test`
+2. `nx affected --target=build`
+3. (opcional, quando e2e existir) `nx affected --target=e2e`
 
 Usar `nx affected` com base no commit de merge da branch alvo, não rodar os quatro apps/libs inteiros a cada PR pequeno.
 

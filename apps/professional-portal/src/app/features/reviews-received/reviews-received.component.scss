@@ -1,0 +1,24 @@
+.reviews-received {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 24px;
+  max-width: 640px;
+
+  &__state {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  &__summary {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  &__author {
+    font-weight: 500;
+    margin-top: 4px;
+  }
+}

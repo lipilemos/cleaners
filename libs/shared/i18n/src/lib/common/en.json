@@ -1,0 +1,12 @@
+{
+  "cancelButton": "Cancel",
+  "confirmButton": "Confirm",
+  "backButton": "Back",
+  "saveButton": "Save",
+  "loading": "Loading...",
+  "changeLanguage": "Change language",
+  "genericErrorMessage": "Something went wrong. Please try again.",
+  "sessionExpiredMessage": "Your session has expired. Please log in again.",
+  "retryButton": "Try again",
+  "dismiss": "Dismiss"
+}

@@ -1,0 +1,59 @@
+{
+  "name": "@cleaners/source",
+  "version": "0.0.0",
+  "license": "MIT",
+  "scripts": {
+    "prepare": "husky",
+    "build:affected": "nx affected --target=build",
+    "api-types:generate": "node tools/api-types/generate.mjs"
+  },
+  "private": true,
+  "devDependencies": {
+    "@angular-devkit/core": "~22.0.4",
+    "@angular-devkit/schematics": "~22.0.4",
+    "@angular/build": "~22.0.4",
+    "@angular/cli": "~22.0.4",
+    "@angular/compiler-cli": "~22.0.4",
+    "@angular/language-service": "~22.0.4",
+    "@angular/pwa": "~22.0.4",
+    "@commitlint/cli": "^21.2.1",
+    "@commitlint/config-conventional": "^21.2.0",
+    "@nx/angular": "^23.1.0",
+    "@nx/devkit": "23.1.0",
+    "@nx/js": "23.1.0",
+    "@nx/web": "23.1.0",
+    "@oxc-project/runtime": "^0.115.0",
+    "@schematics/angular": "~22.0.4",
+    "@swc-node/register": "1.11.1",
+    "@swc/core": "1.15.8",
+    "@swc/helpers": "0.5.18",
+    "@types/node": "^24.0.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.1.0",
+    "nx": "23.1.0",
+    "openapi-typescript": "^7.13.0",
+    "prettier": "^3.8.1",
+    "tslib": "^2.3.0",
+    "typescript": "~6.0.3"
+  },
+  "workspaces": [
+    "libs/shared/*"
+  ],
+  "dependencies": {
+    "@angular/animations": "^22.0.7",
+    "@angular/cdk": "^22.0.5",
+    "@angular/common": "~22.0.4",
+    "@angular/compiler": "~22.0.4",
+    "@angular/core": "~22.0.4",
+    "@angular/forms": "~22.0.4",
+    "@angular/material": "^22.0.5",
+    "@angular/platform-browser": "~22.0.4",
+    "@angular/router": "~22.0.4",
+    "@angular/service-worker": "~22.0.4",
+    "@jsverse/transloco": "^8.4.0",
+    "@jsverse/transloco-locale": "^8.4.0",
+    "@jsverse/transloco-messageformat": "^8.4.0",
+    "@microsoft/signalr": "^8.0.17",
+    "rxjs": "~7.8.0"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "title": "Iniciar sesión",
+  "emailLabel": "Correo electrónico",
+  "passwordLabel": "Contraseña",
+  "submitButton": "Iniciar sesión",
+  "loadingLabel": "Iniciando sesión...",
+  "invalidCredentialsMessage": "Correo electrónico o contraseña inválidos."
+}

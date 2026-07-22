@@ -1,0 +1,5 @@
+{
+  "changePhotoAriaLabel": "Alterar foto de perfil",
+  "unsupportedTypeError": "Formato de imagem não suportado. Use JPEG, PNG ou WEBP.",
+  "tooLargeError": "A imagem excede o tamanho máximo de 5MB."
+}

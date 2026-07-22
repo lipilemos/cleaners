@@ -1,0 +1,8 @@
+{
+  "title": "Log in",
+  "emailLabel": "Email",
+  "passwordLabel": "Password",
+  "submitButton": "Log in",
+  "loadingLabel": "Logging in...",
+  "invalidCredentialsMessage": "Invalid email or password."
+}

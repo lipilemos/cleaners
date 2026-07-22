@@ -1,0 +1,5 @@
+{
+  "changePhotoAriaLabel": "Change profile photo",
+  "unsupportedTypeError": "Unsupported image format. Use JPEG, PNG, or WEBP.",
+  "tooLargeError": "The image exceeds the maximum size of 5MB."
+}

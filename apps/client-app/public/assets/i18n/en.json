@@ -1,0 +1,97 @@
+{
+  "professionalsList": {
+    "title": "Professionals near you",
+    "welcomeTitle": "Hello, {{name}}!",
+    "logoutButton": "Log out",
+    "profileLinkAriaLabel": "My contact details",
+    "locationRequestingMessage": "Getting your location...",
+    "locationDeniedMessage": "We couldn't access your location automatically. Enter it manually below.",
+    "locationUnavailableMessage": "Geolocation isn't supported on this device. Enter it manually below.",
+    "manualLocationTitle": "Enter your location manually",
+    "manualLatitudeLabel": "Latitude",
+    "manualLongitudeLabel": "Longitude",
+    "manualLocationSubmitButton": "Find professionals near this location",
+    "manualLocationHint": "Tip: you can find your latitude/longitude in a maps app.",
+    "retryLocationButton": "Try automatic location again",
+    "loadingMessage": "Finding professionals...",
+    "locationRequiredError": "We couldn't determine your location.",
+    "geocodingError": "We couldn't identify your city from the location provided.",
+    "loadError": "We couldn't load professionals near you.",
+    "emptyState": "No professionals found in your area.",
+    "cardSelectAriaLabel": "View {{name}}'s profile",
+    "searchLabel": "Search by name or city",
+    "searchClearAriaLabel": "Clear search",
+    "noSearchResultsState": "No professionals found for this search."
+  },
+  "professionalDetail": {
+    "loadingMessage": "Loading professional profile...",
+    "loadError": "We couldn't load this professional.",
+    "reviewCountLabel": "{{count}} reviews",
+    "servicesTitle": "Services offered",
+    "servicesAriaLabel": "Services offered by this professional",
+    "reviewsTitle": "Reviews",
+    "noReviewsMessage": "There are no reviews for this professional yet.",
+    "scheduleButton": "Schedule a booking",
+    "calendarNotConnectedMessage": "This professional hasn't connected their calendar yet. Try another professional."
+  },
+  "booking": {
+    "title": "Schedule a booking",
+    "loadingMessage": "Loading available time slots...",
+    "loadError": "We couldn't load this professional's availability.",
+    "serviceLabel": "Service",
+    "slotsTitle": "Available time slots",
+    "noSlotsMessage": "No time slots available in the coming days.",
+    "calendarNotConnectedMessage": "This professional hasn't connected their calendar yet. Try another professional.",
+    "submitting": "Confirming booking...",
+    "pendingMessage": "Your request was sent. Waiting for the professional's confirmation.",
+    "statusLabel": "Status",
+    "successMessage": "Booking confirmed! The professional will contact you.",
+    "createError": "We couldn't confirm the booking. Please try again."
+  },
+  "bookingStatus": {
+    "pending": "Awaiting confirmation",
+    "confirmed": "Confirmed",
+    "completed": "Completed",
+    "cancelled": "Cancelled"
+  },
+  "reviews": {
+    "title": "Rate this professional",
+    "loadingMessage": "Loading booking details...",
+    "bookingNotFoundMessage": "We couldn't find this booking.",
+    "ratingLabel": "Your rating",
+    "ratingRequiredError": "Select a rating from 1 to 5.",
+    "commentLabel": "Comment",
+    "commentPlaceholder": "Tell us about your experience",
+    "submitButton": "Submit review",
+    "successMessage": "Review submitted. Thank you!",
+    "errorMessage": "We couldn't submit your review. Please try again."
+  },
+  "userProfile": {
+    "title": "My contact details",
+    "loadingMessage": "Loading your details...",
+    "loadErrorMessage": "We couldn't load your details.",
+    "nameLabel": "Name",
+    "addressTitle": "Address",
+    "streetLabel": "Street",
+    "numberLabel": "Number",
+    "cityLabel": "City",
+    "stateLabel": "State",
+    "zipCodeLabel": "ZIP code",
+    "successMessage": "Your details were updated successfully.",
+    "saveErrorMessage": "We couldn't save your details. Please try again.",
+    "photoSuccessMessage": "Profile photo updated successfully.",
+    "photoErrorMessage": "We couldn't update your photo. Please try again."
+  },
+  "shell": {
+    "installButton": "Install app",
+    "installButtonAriaLabel": "Install CleanersApp on this device",
+    "updateAvailableMessage": "A new version is available.",
+    "updateAvailableAction": "Update"
+  },
+  "login": {
+    "registerLink": "Don't have an account? Create one"
+  },
+  "register": {
+    "loginLink": "Already have an account? Sign in"
+  }
+}

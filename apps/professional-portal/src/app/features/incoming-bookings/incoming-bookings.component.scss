@@ -1,0 +1,37 @@
+.incoming-bookings {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px;
+
+  &__state {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding-top: 16px;
+  }
+
+  &__card {
+    max-width: 480px;
+  }
+
+  &__time-range {
+    font-weight: 500;
+  }
+
+  &__contact {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid rgba(0, 0, 0, 0.12);
+
+    h3 {
+      margin: 0 0 4px;
+    }
+  }
+}

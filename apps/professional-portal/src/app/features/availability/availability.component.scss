@@ -1,0 +1,40 @@
+.availability {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px;
+  max-width: 720px;
+
+  &__state {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  &__connected {
+    color: var(--mat-sys-primary, green);
+  }
+
+  &__rules-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  &__day-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px;
+  }
+
+  &__time-field {
+    width: 140px;
+  }
+
+  &__row-error {
+    width: 100%;
+    color: var(--mat-sys-error, red);
+    margin: 0;
+  }
+}

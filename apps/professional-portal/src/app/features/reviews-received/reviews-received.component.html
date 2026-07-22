@@ -1,0 +1,43 @@
+<app-portal-toolbar />
+
+<div class="reviews-received">
+  <h1>{{ 'reviewsReceived.title' | transloco }}</h1>
+
+  @if (store.loading()) {
+    <div class="reviews-received__state" role="status">
+      <mat-progress-spinner mode="indeterminate" diameter="32" />
+      <p>{{ 'reviewsReceived.loadingMessage' | transloco }}</p>
+    </div>
+  } @else if (store.error(); as errorKey) {
+    <p role="alert">{{ errorKey | transloco }}</p>
+  } @else {
+    <div class="reviews-received__summary">
+      <app-star-rating [value]="store.averageRating()" [readonly]="true" />
+      <span>
+        {{
+          'reviewsReceived.reviewCountLabel'
+            | transloco: { count: store.reviewCount() }
+        }}
+      </span>
+    </div>
+
+    @if (store.reviews().length === 0) {
+      <p>{{ 'reviewsReceived.emptyMessage' | transloco }}</p>
+    } @else {
+      @for (review of store.reviews(); track review.id) {
+        <mat-card appearance="outlined" class="reviews-received__card">
+          <mat-card-content>
+            <app-star-rating [value]="review.rating" [readonly]="true" />
+            <p class="reviews-received__author">
+              {{ review.authorName }} ·
+              {{ review.createdAt | translocoDate: { dateStyle: 'medium' } }}
+            </p>
+            @if (review.comment) {
+              <p>{{ review.comment }}</p>
+            }
+          </mat-card-content>
+        </mat-card>
+      }
+    }
+  }
+</div>

@@ -1,0 +1,5 @@
+{
+  "name": "auth",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "tags": ["scope:shared", "type:auth"]
+}

@@ -1,0 +1,22 @@
+.portal-toolbar {
+  flex-wrap: wrap;
+  gap: 8px;
+
+  &__nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  &__link--active {
+    text-decoration: underline;
+  }
+
+  &__spacer {
+    flex: 1 1 auto;
+  }
+
+  &__welcome {
+    font-weight: 500;
+  }
+}

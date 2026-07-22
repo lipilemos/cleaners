@@ -1,0 +1,140 @@
+<app-portal-toolbar />
+
+<div class="incoming-bookings">
+  <h1>{{ 'incomingBookings.title' | transloco }}</h1>
+
+  @if (store.loading()) {
+    <div class="incoming-bookings__state" role="status">
+      <mat-progress-spinner mode="indeterminate" diameter="32" />
+      <p>{{ 'incomingBookings.loadingMessage' | transloco }}</p>
+    </div>
+  } @else if (store.error(); as errorKey) {
+    <p role="alert">{{ errorKey | transloco }}</p>
+  } @else {
+    @if (store.actionErrorKey(); as actionErrorKey) {
+      <p role="alert">{{ actionErrorKey | transloco }}</p>
+    }
+
+    <mat-tab-group>
+      <mat-tab
+        [label]="
+          'incomingBookings.pendingTabLabel'
+            | transloco: { count: store.pendingBookings().length }
+        "
+      >
+        <div class="incoming-bookings__list">
+          @if (store.pendingBookings().length === 0) {
+            <p>{{ 'incomingBookings.emptyPendingMessage' | transloco }}</p>
+          } @else {
+            @for (booking of store.pendingBookings(); track booking.id) {
+              <mat-card appearance="outlined" class="incoming-bookings__card">
+                <mat-card-content>
+                  <p class="incoming-bookings__time-range">
+                    {{
+                      booking.startAt
+                        | translocoDate
+                          : { dateStyle: 'medium', timeStyle: 'short' }
+                    }}
+                    –
+                    {{ booking.endAt | translocoDate: { timeStyle: 'short' } }}
+                  </p>
+                </mat-card-content>
+                <mat-card-actions>
+                  <button
+                    mat-flat-button
+                    type="button"
+                    color="primary"
+                    class="incoming-bookings__accept-button"
+                    [disabled]="store.isProcessing(booking.id)"
+                    (click)="accept(booking)"
+                  >
+                    {{ 'incomingBookings.acceptButton' | transloco }}
+                  </button>
+                  <button
+                    mat-stroked-button
+                    type="button"
+                    color="warn"
+                    class="incoming-bookings__reject-button"
+                    [disabled]="store.isProcessing(booking.id)"
+                    (click)="reject(booking)"
+                  >
+                    {{ 'incomingBookings.rejectButton' | transloco }}
+                  </button>
+                </mat-card-actions>
+              </mat-card>
+            }
+          }
+        </div>
+      </mat-tab>
+
+      <mat-tab [label]="'incomingBookings.confirmedTabLabel' | transloco">
+        <div class="incoming-bookings__list">
+          @if (store.confirmedBookings().length === 0) {
+            <p>{{ 'incomingBookings.emptyConfirmedMessage' | transloco }}</p>
+          } @else {
+            @for (booking of store.confirmedBookings(); track booking.id) {
+              <mat-card appearance="outlined" class="incoming-bookings__card">
+                <mat-card-content>
+                  <p class="incoming-bookings__time-range">
+                    {{
+                      booking.startAt
+                        | translocoDate
+                          : { dateStyle: 'medium', timeStyle: 'short' }
+                    }}
+                    –
+                    {{ booking.endAt | translocoDate: { timeStyle: 'short' } }}
+                  </p>
+
+                  @if (booking.customerContact; as contact) {
+                    <div class="incoming-bookings__contact">
+                      <h3>{{ 'incomingBookings.contactTitle' | transloco }}</h3>
+                      <p>{{ contact.name }}</p>
+                      <a
+                        mat-stroked-button
+                        type="button"
+                        [href]="telHref(contact.phone)"
+                        [attr.aria-label]="
+                          'incomingBookings.callButtonAriaLabel'
+                            | transloco: { name: contact.name }
+                        "
+                      >
+                        <mat-icon>call</mat-icon>
+                        {{ contact.phone }}
+                      </a>
+                    </div>
+                  }
+                </mat-card-content>
+              </mat-card>
+            }
+          }
+        </div>
+      </mat-tab>
+
+      <mat-tab [label]="'incomingBookings.historyTabLabel' | transloco">
+        <div class="incoming-bookings__list">
+          @if (store.historyBookings().length === 0) {
+            <p>{{ 'incomingBookings.emptyHistoryMessage' | transloco }}</p>
+          } @else {
+            @for (booking of store.historyBookings(); track booking.id) {
+              <mat-card appearance="outlined" class="incoming-bookings__card">
+                <mat-card-content>
+                  <p class="incoming-bookings__time-range">
+                    {{
+                      booking.startAt
+                        | translocoDate
+                          : { dateStyle: 'medium', timeStyle: 'short' }
+                    }}
+                  </p>
+                  <p>
+                    {{ 'incomingBookings.statusLabel' | transloco }}:
+                    {{ statusKey(booking.status) | transloco }}
+                  </p>
+                </mat-card-content>
+              </mat-card>
+            }
+          }
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  }
+</div>

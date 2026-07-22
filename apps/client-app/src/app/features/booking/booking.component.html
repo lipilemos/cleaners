@@ -1,0 +1,79 @@
+<div class="booking">
+  <button mat-button type="button" (click)="goBack()">
+    {{ 'common.backButton' | transloco }}
+  </button>
+
+  <h1>{{ 'booking.title' | transloco }}</h1>
+
+  @if (store.loading()) {
+    <div class="booking__state" role="status">
+      <mat-progress-spinner mode="indeterminate" diameter="32" />
+      <p>{{ 'booking.loadingMessage' | transloco }}</p>
+    </div>
+  } @else if (bookingPending()) {
+    <mat-card appearance="outlined" class="booking__confirmation">
+      <mat-card-content>
+        <p>{{ 'booking.pendingMessage' | transloco }}</p>
+        @if (statusKey(); as key) {
+          <p class="booking__status" role="status" aria-live="polite">
+            {{ 'booking.statusLabel' | transloco }}: {{ key | transloco }}
+          </p>
+        }
+      </mat-card-content>
+    </mat-card>
+  } @else if (store.professional(); as professional) {
+    @if (!professional.hasConnectedCalendar) {
+      <p role="alert">
+        {{ 'booking.calendarNotConnectedMessage' | transloco }}
+      </p>
+    } @else {
+      <form [formGroup]="form" (ngSubmit)="submit()" class="booking__form">
+        <mat-form-field>
+          <mat-label>{{ 'booking.serviceLabel' | transloco }}</mat-label>
+          <mat-select formControlName="serviceId">
+            @for (service of store.services(); track service.id) {
+              <mat-option [value]="service.id">{{ service.name }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
+        <h2>{{ 'booking.slotsTitle' | transloco }}</h2>
+        @if (!store.hasSlots()) {
+          <p>{{ 'booking.noSlotsMessage' | transloco }}</p>
+        } @else {
+          <mat-radio-group
+            formControlName="slot"
+            class="booking__slots"
+            [attr.aria-label]="'booking.slotsTitle' | transloco"
+          >
+            @for (slot of store.slots(); track slot.startAt) {
+              <mat-radio-button [value]="slot">
+                {{
+                  slot.startAt
+                    | translocoDate: { dateStyle: 'medium', timeStyle: 'short' }
+                }}
+              </mat-radio-button>
+            }
+          </mat-radio-group>
+        }
+
+        @if (store.error(); as errorKey) {
+          <p role="alert">{{ errorKey | transloco }}</p>
+        }
+
+        <button
+          mat-flat-button
+          type="submit"
+          color="primary"
+          [disabled]="store.submitting() || !store.hasSlots()"
+        >
+          @if (store.submitting()) {
+            {{ 'booking.submitting' | transloco }}
+          } @else {
+            {{ 'common.confirmButton' | transloco }}
+          }
+        </button>
+      </form>
+    }
+  }
+</div>

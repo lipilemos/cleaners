@@ -1,0 +1,11 @@
+<div class="login">
+  <app-login-form
+    titleKey="login.title"
+    [loading]="loading()"
+    [errorKey]="errorKey()"
+    (submitted)="handleSubmit($event)"
+  />
+  <a class="login__register-link" routerLink="/register">{{
+    'login.registerLink' | transloco
+  }}</a>
+</div>

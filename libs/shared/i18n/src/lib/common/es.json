@@ -1,0 +1,12 @@
+{
+  "cancelButton": "Cancelar",
+  "confirmButton": "Confirmar",
+  "backButton": "Volver",
+  "saveButton": "Guardar",
+  "loading": "Cargando...",
+  "changeLanguage": "Cambiar idioma",
+  "genericErrorMessage": "Algo salió mal. Inténtalo de nuevo.",
+  "sessionExpiredMessage": "Tu sesión ha caducado. Inicia sesión de nuevo.",
+  "retryButton": "Intentar de nuevo",
+  "dismiss": "Cerrar"
+}

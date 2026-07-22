@@ -1,0 +1,134 @@
+{
+  "name": "professional-portal",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "prefix": "app",
+  "sourceRoot": "apps/professional-portal/src",
+  "tags": ["scope:professional", "type:app"],
+  "targets": {
+    "build": {
+      "executor": "@angular/build:application",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "outputPath": "dist/apps/professional-portal",
+        "browser": "apps/professional-portal/src/main.ts",
+        "tsConfig": "apps/professional-portal/tsconfig.app.json",
+        "inlineStyleLanguage": "scss",
+        "assets": [
+          {
+            "glob": "**/*",
+            "input": "apps/professional-portal/public"
+          },
+          {
+            "glob": "**/*",
+            "input": "libs/shared/i18n/src/lib/common",
+            "output": "assets/i18n/common"
+          },
+          {
+            "glob": "**/*",
+            "input": "libs/shared/ui/src/lib/star-rating/i18n",
+            "output": "assets/i18n/starRating"
+          },
+          {
+            "glob": "**/*",
+            "input": "libs/shared/ui/src/lib/professional-card/i18n",
+            "output": "assets/i18n/professionalCard"
+          },
+          {
+            "glob": "**/*",
+            "input": "libs/shared/ui/src/lib/form-field-error/i18n",
+            "output": "assets/i18n/formFieldError"
+          },
+          {
+            "glob": "**/*",
+            "input": "libs/shared/ui/src/lib/phone-input/i18n",
+            "output": "assets/i18n/phoneInput"
+          },
+          {
+            "glob": "**/*",
+            "input": "libs/shared/ui/src/lib/login-form/i18n",
+            "output": "assets/i18n/loginForm"
+          },
+          {
+            "glob": "**/*",
+            "input": "libs/shared/ui/src/lib/register-form/i18n",
+            "output": "assets/i18n/registerForm"
+          },
+          {
+            "glob": "**/*",
+            "input": "libs/shared/ui/src/lib/avatar-upload/i18n",
+            "output": "assets/i18n/avatarUpload"
+          }
+        ],
+        "styles": ["apps/professional-portal/src/styles.scss"]
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kb",
+              "maximumError": "1mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "4kb",
+              "maximumError": "8kb"
+            }
+          ],
+          "outputHashing": "all",
+          "fileReplacements": [
+            {
+              "replace": "apps/professional-portal/src/environments/environment.ts",
+              "with": "apps/professional-portal/src/environments/environment.prod.ts"
+            }
+          ]
+        },
+        "development": {
+          "optimization": false,
+          "extractLicenses": false,
+          "sourceMap": true
+        },
+        "local": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kb",
+              "maximumError": "1mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "4kb",
+              "maximumError": "8kb"
+            }
+          ],
+          "outputHashing": "all"
+        }
+      }
+    },
+    "serve": {
+      "continuous": true,
+      "executor": "@angular/build:dev-server",
+      "defaultConfiguration": "development",
+      "configurations": {
+        "production": {
+          "buildTarget": "professional-portal:build:production"
+        },
+        "development": {
+          "buildTarget": "professional-portal:build:development"
+        }
+      }
+    },
+    "serve-static": {
+      "continuous": true,
+      "executor": "@nx/web:file-server",
+      "options": {
+        "buildTarget": "professional-portal:build",
+        "port": 4201,
+        "staticFilePath": "dist/apps/professional-portal/browser",
+        "spa": true
+      }
+    }
+  }
+}
