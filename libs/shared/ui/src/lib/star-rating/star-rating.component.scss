@@ -1,0 +1,33 @@
+:host {
+  display: inline-block;
+}
+
+.star-rating {
+  display: inline-flex;
+  gap: 2px;
+}
+
+.star-rating__star {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--mat-sys-primary);
+  cursor: default;
+
+  mat-icon {
+    font-size: 22px;
+    width: 22px;
+    height: 22px;
+  }
+
+  .star-rating--interactive & {
+    cursor: pointer;
+  }
+
+  &:disabled {
+    cursor: default;
+  }
+}

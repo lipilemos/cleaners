@@ -1,0 +1,4 @@
+{
+  "ariaLabel": "{{value}} out of {{max}} stars",
+  "starLabel": "Rating {{position}}"
+}

@@ -37,12 +37,12 @@ libs/shared/ui/src/lib/<componente>/i18n/   # cada componente compartilhado com 
   en.json
   es.json
 
-apps/client-app/src/assets/i18n/
+apps/client-app/public/assets/i18n/
   pt-BR.json                             # textos específicos das features do client-app
   en.json
   es.json
 
-apps/professional-portal/src/assets/i18n/
+apps/professional-portal/public/assets/i18n/
   pt-BR.json
   en.json
   es.json
@@ -57,7 +57,7 @@ apps/professional-portal/src/assets/i18n/
 `<namespace>.<elemento>`, `camelCase`, namespace = nome do feature folder ou do componente:
 
 ```json
-// apps/client-app/src/assets/i18n/pt-BR.json
+// apps/client-app/public/assets/i18n/pt-BR.json
 {
   "professionalsList": {
     "title": "Profissionais perto de você",
@@ -73,7 +73,7 @@ apps/professional-portal/src/assets/i18n/
 ```
 
 ```json
-// apps/client-app/src/assets/i18n/en.json
+// apps/client-app/public/assets/i18n/en.json
 {
   "professionalsList": {
     "title": "Professionals near you",
@@ -89,7 +89,7 @@ apps/professional-portal/src/assets/i18n/
 ```
 
 ```json
-// apps/client-app/src/assets/i18n/es.json
+// apps/client-app/public/assets/i18n/es.json
 {
   "professionalsList": {
     "title": "Profesionales cerca de ti",
@@ -133,10 +133,13 @@ export class ProfessionalsListComponent {
 <h1>{{ 'professionalsList.title' | transloco }}</h1>
 
 @if (professionals().length === 0) {
-  <p>{{ 'professionalsList.emptyState' | transloco }}</p>
+<p>{{ 'professionalsList.emptyState' | transloco }}</p>
 }
 
-<span>{{ 'professionalsList.distanceLabel' | transloco: { distance: pro.distanceKm } }}</span>
+<span
+  >{{ 'professionalsList.distanceLabel' | transloco: { distance: pro.distanceKm
+  } }}</span
+>
 ```
 
 - Prefira o pipe `transloco` no template (declarativo). Use `TranslocoService.translate()` no `.ts` apenas quando o texto for necessário fora do template (ex.: título passado a `MatSnackBar.open()`, mensagem de um `MatDialog` aberto imperativamente).
@@ -171,10 +174,13 @@ export class LanguageStore {
   }
 
   private readInitialLanguage(): SupportedLanguage {
-    const saved = localStorage.getItem(this.storageKey) as SupportedLanguage | null;
+    const saved = localStorage.getItem(
+      this.storageKey,
+    ) as SupportedLanguage | null;
     if (saved && SUPPORTED_LANGUAGES.includes(saved)) return saved;
     const browserLang = navigator.language.slice(0, 2);
-    return (SUPPORTED_LANGUAGES.find((l) => l.startsWith(browserLang)) ?? 'pt-BR') as SupportedLanguage;
+    return (SUPPORTED_LANGUAGES.find((l) => l.startsWith(browserLang)) ??
+      'pt-BR') as SupportedLanguage;
   }
 }
 ```
@@ -189,12 +195,18 @@ export class LanguageStore {
 Componente compartilhado pelos dois apps, reaproveitando Angular Material (`MatMenu` ou `MatSelect`, ver skill [angular-material-ui](../angular-material-ui/SKILL.md)) em vez de um dropdown customizado:
 
 ```html
-<button mat-icon-button [matMenuTriggerFor]="langMenu" [attr.aria-label]="'common.changeLanguage' | transloco">
+<button
+  mat-icon-button
+  [matMenuTriggerFor]="langMenu"
+  [attr.aria-label]="'common.changeLanguage' | transloco"
+>
   <mat-icon>language</mat-icon>
 </button>
 <mat-menu #langMenu="matMenu">
   @for (lang of supportedLanguages; track lang.code) {
-    <button mat-menu-item (click)="languageStore.setLanguage(lang.code)">{{ lang.label }}</button>
+  <button mat-menu-item (click)="languageStore.setLanguage(lang.code)">
+    {{ lang.label }}
+  </button>
   }
 </mat-menu>
 ```

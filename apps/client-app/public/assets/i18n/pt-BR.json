@@ -1,0 +1,97 @@
+{
+  "professionalsList": {
+    "title": "Profissionais perto de você",
+    "welcomeTitle": "Olá, {{name}}!",
+    "logoutButton": "Sair",
+    "profileLinkAriaLabel": "Meus dados",
+    "locationRequestingMessage": "Obtendo sua localização...",
+    "locationDeniedMessage": "Não foi possível acessar sua localização automaticamente. Informe manualmente abaixo.",
+    "locationUnavailableMessage": "Geolocalização não é suportada neste dispositivo. Informe manualmente abaixo.",
+    "manualLocationTitle": "Informar localização manualmente",
+    "manualLatitudeLabel": "Latitude",
+    "manualLongitudeLabel": "Longitude",
+    "manualLocationSubmitButton": "Buscar profissionais nesta localização",
+    "manualLocationHint": "Dica: você pode encontrar sua latitude/longitude em um app de mapas.",
+    "retryLocationButton": "Tentar localização automática novamente",
+    "loadingMessage": "Buscando profissionais...",
+    "locationRequiredError": "Não foi possível determinar sua localização.",
+    "geocodingError": "Não foi possível identificar sua cidade a partir da localização informada.",
+    "loadError": "Não foi possível carregar profissionais próximos.",
+    "emptyState": "Nenhum profissional encontrado na sua região.",
+    "cardSelectAriaLabel": "Ver perfil de {{name}}",
+    "searchLabel": "Buscar por nome ou cidade",
+    "searchClearAriaLabel": "Limpar busca",
+    "noSearchResultsState": "Nenhum profissional encontrado para essa busca."
+  },
+  "professionalDetail": {
+    "loadingMessage": "Carregando perfil do profissional...",
+    "loadError": "Não foi possível carregar este profissional.",
+    "reviewCountLabel": "{{count}} avaliações",
+    "servicesTitle": "Serviços oferecidos",
+    "servicesAriaLabel": "Serviços oferecidos por este profissional",
+    "reviewsTitle": "Avaliações",
+    "noReviewsMessage": "Ainda não há avaliações para este profissional.",
+    "scheduleButton": "Agendar horário",
+    "calendarNotConnectedMessage": "Este profissional ainda não conectou a agenda. Tente outro profissional."
+  },
+  "booking": {
+    "title": "Agendar horário",
+    "loadingMessage": "Carregando horários disponíveis...",
+    "loadError": "Não foi possível carregar a disponibilidade deste profissional.",
+    "serviceLabel": "Serviço",
+    "slotsTitle": "Horários disponíveis",
+    "noSlotsMessage": "Nenhum horário disponível nos próximos dias.",
+    "calendarNotConnectedMessage": "Este profissional ainda não conectou a agenda. Tente outro profissional.",
+    "submitting": "Confirmando agendamento...",
+    "pendingMessage": "Seu pedido foi enviado. Aguardando confirmação do profissional.",
+    "statusLabel": "Status",
+    "successMessage": "Agendamento confirmado! O profissional entrará em contato.",
+    "createError": "Não foi possível confirmar o agendamento. Tente novamente."
+  },
+  "bookingStatus": {
+    "pending": "Aguardando confirmação",
+    "confirmed": "Confirmado",
+    "completed": "Concluído",
+    "cancelled": "Cancelado"
+  },
+  "reviews": {
+    "title": "Avaliar profissional",
+    "loadingMessage": "Carregando dados do agendamento...",
+    "bookingNotFoundMessage": "Não foi possível encontrar este agendamento.",
+    "ratingLabel": "Sua nota",
+    "ratingRequiredError": "Selecione uma nota de 1 a 5.",
+    "commentLabel": "Comentário",
+    "commentPlaceholder": "Conte como foi sua experiência",
+    "submitButton": "Enviar avaliação",
+    "successMessage": "Avaliação enviada. Obrigado!",
+    "errorMessage": "Não foi possível enviar sua avaliação. Tente novamente."
+  },
+  "userProfile": {
+    "title": "Meus dados",
+    "loadingMessage": "Carregando seus dados...",
+    "loadErrorMessage": "Não foi possível carregar seus dados.",
+    "nameLabel": "Nome",
+    "addressTitle": "Endereço",
+    "streetLabel": "Rua",
+    "numberLabel": "Número",
+    "cityLabel": "Cidade",
+    "stateLabel": "Estado",
+    "zipCodeLabel": "CEP",
+    "successMessage": "Dados atualizados com sucesso.",
+    "saveErrorMessage": "Não foi possível salvar seus dados. Tente novamente.",
+    "photoSuccessMessage": "Foto de perfil atualizada com sucesso.",
+    "photoErrorMessage": "Não foi possível atualizar sua foto. Tente novamente."
+  },
+  "shell": {
+    "installButton": "Instalar aplicativo",
+    "installButtonAriaLabel": "Instalar o CleanersApp neste dispositivo",
+    "updateAvailableMessage": "Uma nova versão está disponível.",
+    "updateAvailableAction": "Atualizar"
+  },
+  "login": {
+    "registerLink": "Não tem conta? Criar conta"
+  },
+  "register": {
+    "loginLink": "Já tem conta? Entrar"
+  }
+}

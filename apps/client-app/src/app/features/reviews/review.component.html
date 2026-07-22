@@ -1,0 +1,65 @@
+<div class="review">
+  <h1>{{ 'reviews.title' | transloco }}</h1>
+
+  @if (loading()) {
+    <div class="review__state" role="status">
+      <mat-progress-spinner mode="indeterminate" diameter="32" />
+      <p>{{ 'reviews.loadingMessage' | transloco }}</p>
+    </div>
+  } @else if (loadErrorKey(); as errorKey) {
+    <p role="alert">{{ errorKey | transloco }}</p>
+  } @else if (professional(); as pro) {
+    <mat-card appearance="outlined">
+      <mat-card-header>
+        <mat-card-title>{{ pro.name }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <form class="review__form" (ngSubmit)="submit()">
+          <div class="review__rating-field">
+            <span id="review-rating-label">{{
+              'reviews.ratingLabel' | transloco
+            }}</span>
+            <app-star-rating
+              [value]="rating()"
+              [readonly]="false"
+              (valueChange)="setRating($event)"
+            />
+            @if (ratingInvalid()) {
+              <mat-error>{{
+                'reviews.ratingRequiredError' | transloco
+              }}</mat-error>
+            }
+          </div>
+
+          <mat-form-field>
+            <mat-label>{{ 'reviews.commentLabel' | transloco }}</mat-label>
+            <textarea
+              matInput
+              rows="4"
+              [formControl]="commentControl"
+              [placeholder]="'reviews.commentPlaceholder' | transloco"
+            ></textarea>
+            <app-form-field-error [control]="commentControl" />
+          </mat-form-field>
+
+          @if (submitErrorKey(); as submitError) {
+            <p role="alert">{{ submitError | transloco }}</p>
+          }
+
+          <button
+            mat-flat-button
+            type="submit"
+            color="primary"
+            [disabled]="submitting()"
+          >
+            @if (submitting()) {
+              {{ 'common.loading' | transloco }}
+            } @else {
+              {{ 'reviews.submitButton' | transloco }}
+            }
+          </button>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  }
+</div>

@@ -1,0 +1,150 @@
+<mat-toolbar color="primary" class="professionals-list__toolbar">
+  <span>{{ 'professionalsList.title' | transloco }}</span>
+  <span class="professionals-list__spacer"></span>
+  <span class="professionals-list__welcome">{{
+    'professionalsList.welcomeTitle' | transloco: { name: accountName() }
+  }}</span>
+  <button
+    mat-icon-button
+    type="button"
+    routerLink="/profile"
+    [attr.aria-label]="'professionalsList.profileLinkAriaLabel' | transloco"
+  >
+    <mat-icon>person</mat-icon>
+  </button>
+  <button mat-stroked-button type="button" color="accent" (click)="logout()">
+    {{ 'professionalsList.logoutButton' | transloco }}
+  </button>
+</mat-toolbar>
+
+<div class="professionals-list">
+  @switch (locationStore.permissionState()) {
+    @case ('requesting') {
+      <div class="professionals-list__state" role="status">
+        <mat-progress-spinner mode="indeterminate" diameter="32" />
+        <p>{{ 'professionalsList.locationRequestingMessage' | transloco }}</p>
+      </div>
+    }
+    @case ('denied') {
+      <p class="professionals-list__hint" role="alert">
+        {{ 'professionalsList.locationDeniedMessage' | transloco }}
+      </p>
+    }
+    @case ('unavailable') {
+      <p class="professionals-list__hint" role="alert">
+        {{ 'professionalsList.locationUnavailableMessage' | transloco }}
+      </p>
+    }
+  }
+
+  @if (locationStore.needsManualFallback()) {
+    <mat-card class="professionals-list__manual-location" appearance="outlined">
+      <mat-card-content>
+        <h2>{{ 'professionalsList.manualLocationTitle' | transloco }}</h2>
+        <form
+          [formGroup]="manualLocationForm"
+          class="professionals-list__manual-form"
+          (ngSubmit)="submitManualLocation()"
+        >
+          <mat-form-field>
+            <mat-label>{{
+              'professionalsList.manualLatitudeLabel' | transloco
+            }}</mat-label>
+            <input matInput type="number" formControlName="latitude" />
+            <app-form-field-error
+              [control]="manualLocationForm.controls.latitude"
+            />
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>{{
+              'professionalsList.manualLongitudeLabel' | transloco
+            }}</mat-label>
+            <input matInput type="number" formControlName="longitude" />
+            <app-form-field-error
+              [control]="manualLocationForm.controls.longitude"
+            />
+          </mat-form-field>
+          <button mat-flat-button type="submit" color="primary">
+            {{ 'professionalsList.manualLocationSubmitButton' | transloco }}
+          </button>
+        </form>
+        <p class="professionals-list__hint">
+          {{ 'professionalsList.manualLocationHint' | transloco }}
+        </p>
+        <button mat-button type="button" (click)="retryGeolocation()">
+          {{ 'professionalsList.retryLocationButton' | transloco }}
+        </button>
+      </mat-card-content>
+    </mat-card>
+  }
+
+  @if (locationStore.position()) {
+    <mat-form-field class="professionals-list__search" appearance="outline">
+      <mat-label>{{ 'professionalsList.searchLabel' | transloco }}</mat-label>
+      <mat-icon matIconPrefix>search</mat-icon>
+      <input
+        matInput
+        type="text"
+        [formControl]="searchControl"
+        [attr.aria-label]="'professionalsList.searchLabel' | transloco"
+      />
+      @if (searchControl.value) {
+        <button
+          matIconSuffix
+          mat-icon-button
+          type="button"
+          [attr.aria-label]="
+            'professionalsList.searchClearAriaLabel' | transloco
+          "
+          (click)="clearSearch()"
+        >
+          <mat-icon>close</mat-icon>
+        </button>
+      }
+    </mat-form-field>
+  }
+
+  @if (store.loading()) {
+    <div class="professionals-list__state" role="status">
+      <mat-progress-spinner mode="indeterminate" diameter="32" />
+      <p>{{ 'professionalsList.loadingMessage' | transloco }}</p>
+    </div>
+  } @else if (store.error(); as errorKey) {
+    <div class="professionals-list__state">
+      <p role="alert">{{ errorKey | transloco }}</p>
+      @if (locationStore.position()) {
+        <button mat-stroked-button type="button" (click)="store.retry()">
+          {{ 'common.retryButton' | transloco }}
+        </button>
+      }
+    </div>
+  } @else if (!store.hasResults()) {
+    @if (locationStore.position()) {
+      @if (store.isUserSearching()) {
+        <p class="professionals-list__hint">
+          {{ 'professionalsList.noSearchResultsState' | transloco }}
+        </p>
+      } @else {
+        <p class="professionals-list__hint">
+          {{ 'professionalsList.emptyState' | transloco }}
+        </p>
+      }
+    }
+  } @else {
+    <div class="professionals-list__grid">
+      @for (professional of store.professionals(); track professional.id) {
+        <button
+          type="button"
+          class="professionals-list__card-button"
+          [attr.aria-label]="
+            'professionalsList.cardSelectAriaLabel'
+              | transloco: { name: professional.name }
+          "
+          (click)="openProfessional(professional)"
+        >
+          <app-professional-card [professional]="professional" />
+        </button>
+      }
+    </div>
+  }
+</div>

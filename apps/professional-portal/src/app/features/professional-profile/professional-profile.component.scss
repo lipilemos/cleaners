@@ -1,0 +1,26 @@
+.professional-profile {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px;
+  max-width: 640px;
+
+  &__state {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-start;
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+}

@@ -1,0 +1,68 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+.professional-card {
+  position: relative;
+  width: 100%;
+}
+
+.professional-card__badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 1;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--mat-sys-tertiary-container);
+  color: var(--mat-sys-on-tertiary-container);
+  font-size: 0.8rem;
+}
+
+.professional-card__photo {
+  width: 100%;
+  height: clamp(120px, 32vw, 180px);
+  object-fit: cover;
+}
+
+.professional-card__photo--placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--mat-sys-surface-variant);
+  color: var(--mat-sys-on-surface-variant);
+
+  mat-icon {
+    font-size: 48px;
+    width: 48px;
+    height: 48px;
+  }
+}
+
+.professional-card__rating {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.professional-card__review-count {
+  color: var(--mat-sys-on-surface-variant);
+  font-size: 1rem;
+}
+
+.professional-card {
+  mat-card-title {
+    font-size: 1.25rem;
+    line-height: 1.3;
+  }
+
+  mat-card-subtitle {
+    font-size: 0.95rem;
+  }
+
+  .mat-mdc-chip {
+    font-size: 0.9rem;
+  }
+}

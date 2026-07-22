@@ -1,0 +1,14 @@
+<mat-form-field>
+  <mat-label>{{ resolvedLabelKey() | transloco }}</mat-label>
+  <input
+    matInput
+    type="tel"
+    inputmode="tel"
+    autocomplete="tel"
+    required
+    [disabled]="isDisabled || disabled()"
+    [value]="value"
+    (input)="handleInput($any($event.target).value)"
+    (blur)="handleBlur()"
+  />
+</mat-form-field>

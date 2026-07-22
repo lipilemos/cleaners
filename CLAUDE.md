@@ -2,7 +2,9 @@
 
 Este arquivo direciona qualquer trabalho feito neste repositório com Claude Code. Ele descreve o domínio do produto, a stack, a arquitetura esperada e os padrões de código Angular que **devem** ser seguidos. Os agentes, skills e comandos referenciados aqui vivem em [.claude/agents](.claude/agents), [.claude/skills](.claude/skills) e [.claude/commands](.claude/commands).
 
-> Estado atual: este repositório contém apenas os padrões de desenvolvimento (.claude/), este CLAUDE.md e o plano de tarefas ([TASKS.md](TASKS.md)). O workspace Nx/Angular ainda não foi criado. Ao iniciar o projeto (`npx create-nx-workspace`), mantenha as convenções descritas abaixo. O backend já teve o scaffold inicial criado em paralelo — ver seção 1.1.
+> Estado atual: o workspace Nx/Angular (`apps/`, `libs/`) já existe neste repositório — ver seções 1.2 e 3 para a estrutura. O backend (`cleaners-api`, repositório irmão) também já está em desenvolvimento ativo — ver seção 1.3 para o índice atualizado da sua estrutura (entidades, DTOs, endpoints).
+>
+> ⚠️ **Git**: neste repositório, `apps/`, `libs/` e a maior parte da config do workspace (`nx.json`, `package.json`, `tsconfig*.json` etc.) ainda estão **não commitados** — só `.claude/`, este `CLAUDE.md`, `TASKS.md` e alguns outros arquivos estão versionados (`git status` mostrando "up to date" é enganoso). O mesmo vale no `cleaners-api`: boa parte do trabalho de auth/login ainda não foi commitada lá. **Nunca rode `git stash`/`git clean`/`git checkout --`/`git reset --hard` sem antes checar `git status` com cuidado** — "untracked" aqui não significa "descartável", significa "única cópia em disco".
 
 ## 1. Visão geral do produto
 
@@ -23,19 +25,19 @@ Fluxo principal do profissional (portal do profissional, ver seção 1.2):
 
 Entidades de domínio centrais (nomes a usar de forma consistente no código):
 
-| Entidade | Descrição |
-|---|---|
-| `User` | Cliente que contrata o serviço. Possui dados de contato (telefone, endereço/geolocalização). |
+| Entidade       | Descrição                                                                                                         |
+| -------------- | ----------------------------------------------------------------------------------------------------------------- |
+| `User`         | Cliente que contrata o serviço. Possui dados de contato (telefone, endereço/geolocalização).                      |
 | `Professional` | Prestador de serviço de limpeza. Possui `services[]`, `rating`, `reviews[]`, localização, e uma agenda conectada. |
-| `Service` | Um tipo de serviço oferecido por um profissional (ex.: limpeza residencial, pós-obra, passadoria). |
-| `Review` | Avaliação de um `User` sobre um `Professional` após um serviço concluído (nota 1–5 + comentário). |
-| `Booking` | Agendamento entre `User` e `Professional`, vinculado a um evento no Google Agenda do profissional. |
+| `Service`      | Um tipo de serviço oferecido por um profissional (ex.: limpeza residencial, pós-obra, passadoria).                |
+| `Review`       | Avaliação de um `User` sobre um `Professional` após um serviço concluído (nota 1–5 + comentário).                 |
+| `Booking`      | Agendamento entre `User` e `Professional`, vinculado a um evento no Google Agenda do profissional.                |
 
 ## 1.1 Arquitetura geral: este repositório é o frontend (monorepo Nx)
 
 Este repositório contém **apenas o frontend**. Toda regra de negócio, persistência e autenticação vivem em uma **API separada, em repositório próprio**:
 
-- **Backend**: .NET Core (C#), em outro repositório (não neste) — **[lipilemos/cleaners-api](https://github.com/lipilemos/cleaners-api)** (privado). Estrutura em Clean Architecture (`Domain`/`Application`/`Infrastructure`/`Api`); ver `README.md` e `TASKS.md` desse repositório para arquitetura e plano de implementação em andamento. Ao planejar uma feature que depende de um endpoint novo (ver marcações 🔗 **API** no [TASKS.md](TASKS.md) deste repositório), verifique o `TASKS.md` do `cleaners-api` para desenvolver em par — o endpoint e o consumo no Angular tendem a evoluir juntos.
+- **Backend**: .NET Core (C#), em outro repositório (não neste) — **[lipilemos/cleaners-api](https://github.com/lipilemos/cleaners-api)** (privado). Localmente vive como repositório irmão deste, em `../cleaners-api` (ex.: `C:\Users\<usuário>\source\repos\cleaners-api`). Estrutura em Clean Architecture (`Domain`/`Application`/`Infrastructure`/`Api`); ver `README.md` e `TASKS.md` desse repositório para arquitetura e plano de implementação em andamento. Ao planejar uma feature que depende de um endpoint novo (ver marcações 🔗 **API** no [TASKS.md](TASKS.md) deste repositório), verifique o `TASKS.md` do `cleaners-api` para desenvolver em par — o endpoint e o consumo no Angular tendem a evoluir juntos. **Ver seção 1.3** para um índice detalhado (entidades, DTOs, endpoints) da estrutura atual do backend, mantido atualizado neste arquivo.
 - **Banco de dados**: gerenciado inteiramente pelo backend .NET; o Angular nunca acessa dados diretamente, sempre via a API HTTP.
 - **Regra de negócio**: decisões que dependem de fonte de verdade do servidor (confirmação de agendamento, disponibilidade real, vínculo de review a booking concluído) são resolvidas pela API .NET. O Angular pode replicar cálculos simples só para exibição/derivação de UI (ex.: média de estrelas a partir de uma lista já recebida), mas **nunca decide sozinho** se uma ação é permitida.
 - **Autenticação**: JWT emitido pela API .NET e entregue como **cookie `httpOnly`, `Secure`, `SameSite`** — nunca como token manipulável por JavaScript (nem `localStorage`, nem header montado manualmente). Ver seção 6.1.
@@ -60,7 +62,7 @@ libs/
     i18n/                   # config central de tradução (Transloco), LanguageStore, textos comuns aos dois apps
 ```
 
-Regras de dependência (ver skill [nx-workspace-standards](.claude/skills/nx-workspace-standards/SKILL.md) para a configuração de boundaries via ESLint/tags):
+Regras de dependência (ver skill [nx-workspace-standards](.claude/skills/nx-workspace-standards/SKILL.md) para a convenção de tags):
 
 - `apps/*` pode depender de `libs/shared/*`. `libs/shared/*` **nunca** depende de `apps/*`.
 - `libs/shared/ui` não depende de `libs/shared/data-access` (componentes de UI não fazem HTTP).
@@ -68,9 +70,83 @@ Regras de dependência (ver skill [nx-workspace-standards](.claude/skills/nx-wor
 - Nenhuma lib importa código específico de um app.
 - Assumido por padrão, sinalize se não for o caso: os dois apps autenticam de forma **independente** (login separado para `User` e para `Professional`) — não há SSO entre eles nesta fase.
 
+## 1.3 Índice da estrutura atual do backend (`cleaners-api`)
+
+> **Regra de manutenção**: esta seção é o índice único e vivo da estrutura do backend, para consulta rápida ao planejar/implementar uma feature no frontend sem precisar reexplorar o outro repositório do zero. Sempre que uma mudança em `cleaners-api` for feita (entidade, campo, DTO, endpoint) — inclusive como parte de uma feature deste repositório — **atualize esta seção no mesmo commit/sessão**. Nunca crie arquivos de memória separados para isso; a fonte de verdade sobre a estrutura do backend, para fins de planejamento de features do frontend, é este CLAUDE.md.
+
+**Caminho local**: `../cleaners-api` (repositório irmão, .NET 10). Rodar localmente: `dotnet run --project src/CleanersApi.Api` (ver `README.md` do `cleaners-api` para connection string/user-secrets).
+
+**Camadas** (Clean Architecture):
+
+```
+src/
+  CleanersApi.Domain/         # entidades (abaixo) + enum BookingStatus
+  CleanersApi.Application/    # Dtos/, Abstractions/Repositories/, Abstractions/Services/, Services/ (regra de negócio), DependencyInjection.cs (AddApplication)
+  CleanersApi.Infrastructure/ # Persistence/ (EF Core + Migrations), Repositories/ (Ef*Repository), Services/ (Jwt, PasswordHasher, ImageCompressor — dependem de tecnologia externa), ExternalServices/ (GoogleCalendarMcpService — stub)
+  CleanersApi.Api/            # Controllers/, Middleware/ (CsrfMiddleware), Program.cs
+tests/
+  CleanersApi.Application.Tests/
+```
+
+> **Regra obrigatória de fluxo entre camadas** (vale para todo controller novo ou existente): `Controller → IService (Application/Abstractions/Services) → Service (Application/Services) → IRepository (Application/Abstractions/Repositories) → Ef*Repository (Infrastructure/Repositories)`. Um controller **nunca** injeta um `I*Repository` nem contém regra de negócio (validação de conflito, verificação de senha, montagem de DTO a partir de entidade, limites/validação de upload etc.) — ele só faz três coisas: (1) extrai dado de HTTP puro (claims do JWT, corpo da requisição, `IFormFile`/stream, `Request.Scheme`/`Host` quando a URL de retorno precisa de origem absoluta), (2) chama exatamente um método de um `IService`, (3) traduz o resultado (DTO, enum de outcome, `null`) em status HTTP/cookie. Toda regra de negócio, incluindo mapeamento entidade→DTO, vive na implementação do service em `Application/Services` — nunca no controller nem no repository. Services de `Application/Services` são registrados via `AddApplication()` (`CleanersApi.Application/DependencyInjection.cs`), chamado a partir do `Program.cs` junto com `AddInfrastructure()`. Hoje: `AuthService` (login/registro), `SessionService` (bootstrap `GET /api/me`), `ProfessionalService` (busca, detalhe, CRUD de `Service` do profissional dono) e `UserService` (perfil do `User`, upload/compressão/limites de foto).
+
+**Entidades de domínio** (`Domain/Entities`, campos atuais):
+
+- `User`: `Id, Name, Email, Phone, PhotoData, PhotoContentType, PhotoUpdatedAt, Address, Number, City, State, ZipCode, Latitude, Longitude, PasswordHash, Bookings[], Reviews[]`. `PhotoData` (`byte[]?`, `varbinary(max)`) guarda a foto de perfil **em bytes direto no banco** (decisão explícita — diferente do padrão de URL externa usado em `Professional.PhotoUrl`), sempre já recomprimida para JPEG e no máximo ~100KB antes de chegar aqui (`IImageCompressor`, ver seção abaixo); `PhotoContentType` guarda o content-type a devolver (`image/jpeg`) e `PhotoUpdatedAt` só serve de cache-buster na URL exposta ao frontend. `Address/Number/City/State/ZipCode` foram adicionados para casar com o form estruturado do `client-app` (feature `user-profile`, model `UserAddress`), consistente com o padrão já usado em `Professional`.
+- `Professional`: `Id, Name, Email, Phone, PhotoUrl, Latitude, Longitude, Address, City, State, ZipCode, IsFeatured, HasConnectedCalendar, PasswordHash, Services[], Reviews[], Bookings[]`, `AverageRating` (computed a partir de `Reviews`, ignorado pelo EF)
+- `Service`: `Id, ProfessionalId, Name, Description, Price, DurationMinutes` — CRUD completo (`professionals/me/services*`, ver tabela de endpoints) restrito ao profissional dono via claim `sub`, nunca por `ProfessionalId` no corpo.
+- `Review`: `Id, UserId, ProfessionalId, BookingId` (vínculo único e obrigatório a um `Booking`), `Rating, Comment, CreatedAt`
+- `Booking`: `Id, UserId, ProfessionalId, ServiceId, ScheduledStart, ScheduledEnd, Status` (enum `BookingStatus`: `PendingConfirmation/Confirmed/Rejected/CancelledByUser/CancelledByProfessional/Completed`), `GoogleCalendarEventId?, CreatedAt, ConfirmedAt?`
+
+**DTOs expostos hoje** (`Application/Dtos`):
+
+- `ProfessionalSummaryDto(Id, Name, PhotoUrl, Services[ServiceDto], AverageRating, ReviewCount, IsFeatured, City, State)` — usado por `GET /api/professionals` (listagem).
+- `ProfessionalDetailDto(Id, Name, PhotoUrl, Services[ServiceDto], AverageRating, ReviewCount, IsFeatured, City, State, HasConnectedCalendar, Reviews[ProfessionalReviewDto])` e `ProfessionalReviewDto(Id, AuthorName, Rating, Comment, CreatedAt)` — usado por `GET /api/professionals/{id}` (feature `professional-detail`), com as avaliações já embutidas na resposta (evita depender de um endpoint `/reviews` próprio, que ainda não existe — ver pendências abaixo). Ainda não expõe `Address`/`ZipCode`/`Phone` do profissional (mesma decisão de privacidade do `ProfessionalSummaryDto`, ver seção 5.4) — decisão registrada, não uma pendência.
+- `ProfessionalAccountDto(Id, Name, Email, PhotoUrl)` — login/registro/`me` de `Professional`.
+- `UserAccountDto(Id, Name, Email, Phone, Address, Latitude, Longitude)` — login/registro/`me` de `User` (forma resumida/flat, igual antes; `Address` continua uma única string aqui, não confundir com `UserProfileDto` abaixo).
+- `UserProfileDto(Id, Name, Email, Phone, PhotoUrl, Address: UserProfileAddressDto)` e `UserProfileAddressDto(Street, Number, City, State, ZipCode, Latitude, Longitude)` — forma completa de "meus dados" (`GET/PUT /api/users/me`), endereço já estruturado por campo para casar com o form Angular. `UpdateUserProfileRequestDto(Name, Phone, Address: UserProfileAddressDto)` é o corpo do PUT.
+- `ServiceDto(Id, Name, Description, Price, DurationMinutes)`.
+- `CreateServiceRequestDto(Name, Description, Price, DurationMinutes)` — corpo de `POST`/`PUT /api/professionals/me/services*`; mesmo shape para criar e atualizar.
+- `LoginRequestDto(Email, Password)`, `RegisterUserRequestDto(Name, Email, Password, Phone)`, `RegisterProfessionalRequestDto(Name, Email, Password, Phone)`.
+
+**Endpoints existentes**:
+
+| Endpoint                                     | Auth                                        | Observação                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| -------------------------------------------- | ------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `POST /api/login`                            | —                                           | único endpoint para `User` e `Professional`, resolvido por e-mail (sem SSO — ver seção 1.2)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
+| `POST /api/logout`                           | —                                           | limpa o cookie no servidor                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| `POST /api/register`                         | —                                           | cria `User`, auto-login                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| `POST /api/professional-register`            | —                                           | cria `Professional`, auto-login                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| `GET /api/me`                                | `[Authorize]`                               | bootstrap de sessão (200 autenticado / 401 deslogado) — ver seção 6.1                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| `GET /api/professionals?search&take`         | —                                           | busca por nome **ou** cidade (`Contains` case-insensitive em memória de string, não Haversine — ver `EfProfessionalRepository.SearchAsync`), ordenada por destaque > nota média > nome. `search` vazio/ausente retorna lista vazia. Substituiu o antigo `?lat&lng` (proximidade): a busca inicial do `client-app` agora resolve a cidade a partir da geolocalização **no próprio Angular** (reverse geocoding client-side via Nominatim/OpenStreetMap, `ReverseGeocodingService` em `apps/client-app/src/app/core/geolocation`) e envia essa cidade como `search`; buscas seguintes (nome ou cidade digitados) usam o mesmo endpoint com o termo digitado. |
+| `GET /api/professionals/{id}`                | —                                           | detalhe do profissional (feature `professional-detail`), retorna `ProfessionalDetailDto` com `reviews[]` embutidas (`EfProfessionalRepository.GetByIdAsync` já inclui `Reviews.User` para resolver `AuthorName`) e `hasConnectedCalendar`                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| `GET /api/professionals/me`                  | `[Authorize]` + `account_type=Professional` | "meu perfil" do `Professional` logado (feature `professional-profile`, T31/B21), mesmo shape de `GET /professionals/{id}` (`ProfessionalDetailDto`) mas resolvido pela claim `sub`                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| `POST /api/professionals/me/services`        | `[Authorize]` + `account_type=Professional` | cria um `Service` do profissional logado — corpo `CreateServiceRequestDto`, retorna `ServiceDto`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| `PUT /api/professionals/me/services/{id}`    | `[Authorize]` + `account_type=Professional` | atualiza um `Service` do profissional logado — 404 tanto se o serviço não existe quanto se pertence a outro profissional (não distingue os dois casos)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| `DELETE /api/professionals/me/services/{id}` | `[Authorize]` + `account_type=Professional` | remove um `Service` do profissional logado                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| `GET /api/users/me`                          | `[Authorize]`                               | "meus dados" completos do `User` logado (feature `user-profile`), resolvido pela claim `sub` — retorna `UserProfileDto`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| `PUT /api/users/me`                          | `[Authorize]`                               | atualiza `Name/Phone/Address` (estruturado) do `User` logado — corpo `UpdateUserProfileRequestDto`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| `POST /api/users/me/photo`                   | `[Authorize]`                               | upload da foto de perfil (`multipart/form-data`, campo `file`; aceita jpeg/png/webp até 5MB de upload original). Recomprime via `IImageCompressor` (`ImageSharpImageCompressor`, pacote `SixLabors.ImageSharp` — reduz qualidade JPEG e, se preciso, dimensões, em passos, até caber em ~100KB) e persiste o resultado direto em `User.PhotoData`/`PhotoContentType` — **decisão registrada**: bytes no banco, não arquivo/URL externa (diferente de `Professional.PhotoUrl`, que continua sendo só uma URL, sem endpoint de upload ainda).                                                                                                                |
+| `GET /api/users/me/photo`                    | `[Authorize]`                               | serve os bytes da foto do próprio usuário logado (`FileResult`, content-type `image/jpeg`); `404` se não houver foto. Autenticado pelo mesmo cookie de sessão — um `<img src>` da SPA funciona porque cookie `SameSite=Lax` é enviado em requisições same-site (mesmo domínio, ignorando porta/scheme conforme já vale para o resto da API), não precisa de URL assinada. `UserProfileDto.PhotoUrl` (`GET/PUT /api/users/me`) é montado apontando pra cá, com `?v={PhotoUpdatedAt}` só como cache-buster.                                                                                                                                                  |
+
+**Auth**: JWT (HS256, `Jwt:SigningKey` via user-secrets) entregue como cookie `httpOnly`+`Secure`+`SameSite=Lax` (nunca no corpo — ver `AuthCookieNames`/`AuthController`). Claims: `sub`, `email`, `name`, `account_type` (`User`/`Professional`). CORS com `AllowCredentials` liberado só para `localhost:4200/4201` (http e https). CSRF via `CsrfMiddleware` (double-submit: cookie `XSRF-TOKEN` não-httpOnly + header, ver seção 6.1 deste arquivo) — vale também para o upload multipart de foto, sem tratamento especial. Autorização por tipo de conta (claim `account_type`) além do `[Authorize]` padrão (autenticação) é checada manualmente por controller quando o endpoint é exclusivo de um tipo — ex.: `ProfessionalsController.ResolveProfessionalId()` retorna 401 se não autenticado e 403 (`Forbid()`) se autenticado como `User` tentando gerenciar `services` de profissional; ainda não existe um mecanismo central (policy/middleware) para isso — cada controller que precisar replica o mesmo padrão até essa necessidade aparecer de novo.
+
+**Persistência**: SQL Server local (`PC_LIPE\SQLEXPRESS`, banco `cleaners_dev`), EF Core, connection string nunca commitada (`appsettings.Development.json` local ou user-secrets). Migrations aplicadas até o momento: `InitialCreate`, `AddPasswordHash`, `AddProfessionalAddress`, `AddUserProfileDetails` (adiciona `Number/City/State/ZipCode` em `Users`, e um `PhotoUrl` de arquivo em disco — abordagem já revertida), `ReplaceUserPhotoUrlWithPhotoData` (troca `PhotoUrl` por `PhotoData/PhotoContentType/PhotoUpdatedAt`, foto guardada em bytes no banco). Fluxo padrão para uma mudança de schema:
+
+```
+dotnet ef migrations add <Nome> --project src/CleanersApi.Infrastructure --startup-project src/CleanersApi.Api --output-dir Persistence/Migrations
+dotnet ef database update --project src/CleanersApi.Infrastructure --startup-project src/CleanersApi.Api
+```
+
+**Pendências conhecidas relevantes ao planejar uma feature do frontend** (ver `TASKS.md` do `cleaners-api` para o plano completo):
+
+- `GoogleCalendarMcpService` é stub (`NotImplementedException`) — bloqueia qualquer feature real de agendamento (seção 5.3).
+- Não existem ainda endpoints de `bookings`/`reviews` (CRUD) — só leitura de profissionais (incluindo reviews embutidas no detalhe, ver acima) e autenticação. Escrever uma nova avaliação (T24) e a tela `reviews-received` do `professional-portal` (T30) ainda vão precisar de `POST/GET /api/reviews` dedicado. `services` (CRUD) já existe, ver tabela de endpoints acima (T31/B21).
+- Não existe seed de dados formal (script versionado); os profissionais hoje no banco de dev são registros manuais de teste.
+
 ## 2. Stack
 
-- **Nx** como gerenciador do monorepo (build, lint, test, dependency graph, module boundaries).
+- **Nx** como gerenciador do monorepo (build, test, dependency graph, module boundaries).
 - **Angular** (última versão estável) com **standalone components** — não usar `NgModule` para features novas.
 - **Angular Material + CDK** como base do design system (ver skill [angular-material-ui](.claude/skills/angular-material-ui/SKILL.md)). Componentes de domínio em `libs/shared/ui` envolvem/compõem Material, não recriam do zero o que o Material já resolve (dialog, date-picker, form-field, etc.).
 - **Signals** para estado local e derivado (`signal`, `computed`, `effect`). Evitar `BehaviorSubject` como store de estado de UI quando um signal resolve.
@@ -83,7 +159,7 @@ Regras de dependência (ver skill [nx-workspace-standards](.claude/skills/nx-wor
 - **Testes**: Jasmine/Karma (ou Vitest, se adotado) para unitários; Playwright/Cypress para e2e dos fluxos críticos (login → lista → agendamento; login profissional → aceitar agendamento).
 - **Estilo**: SCSS por componente + tema Material central, mobile-first.
 - **Acessibilidade**: WCAG AA como piso — Material ajuda mas não garante sozinho, especialmente nos cards de profissional e no fluxo de agendamento.
-- **Qualidade/tooling**: ESLint + Prettier + Husky + lint-staged + commitlint (Conventional Commits). Ver skill [nx-workspace-standards](.claude/skills/nx-workspace-standards/SKILL.md).
+- **Qualidade/tooling**: Prettier + Husky + lint-staged + commitlint (Conventional Commits). Sem ESLint neste projeto — decisão explícita, não lacuna a preencher; module boundaries e demais convenções de código são responsabilidade da revisão (`angular-code-reviewer`, `/review-angular`), não de um linter automatizado. Ver skill [nx-workspace-standards](.claude/skills/nx-workspace-standards/SKILL.md).
 - **Contrato com a API**: tipos TypeScript gerados a partir do OpenAPI/Swagger da API .NET (ver seção 6.2) — nunca DTOs escritos manualmente por adivinhação.
 
 ## 3. Arquitetura de pastas (dentro de cada app)
@@ -96,7 +172,7 @@ apps/client-app/src/app/
       csrf.interceptor.ts          # anexa header anti-CSRF em requisições mutáveis
       error.interceptor.ts         # normaliza erros HTTP, trata 401 (sessão expirada)
   features/
-    professionals-list/            # lista + busca por proximidade
+    professionals-list/            # lista + busca por cidade/nome (geolocalização resolve a cidade inicial)
     professional-detail/           # perfil, serviços, avaliações
     booking/                       # criação de agendamento (cliente)
     reviews/
@@ -115,6 +191,7 @@ apps/professional-portal/src/app/
 ```
 
 Regras:
+
 - Cada feature é standalone e lazy-loaded via rotas (`loadComponent`/`loadChildren`).
 - Um componente específico de domínio só fica dentro de `apps/*/features` se **não** for reaproveitável pelo outro app; caso contrário vai para `libs/shared/ui`.
 - `core/` de cada app não depende de `features/` do mesmo app.
@@ -130,22 +207,25 @@ Regras:
 - **UI base**: prefira componentes Angular Material a construir do zero (dialog, form-field, date-picker, snackbar, table). Só construa um componente customizado quando o Material não cobrir o caso.
 - **Formulários**: Reactive Forms (`FormGroup`/`FormControl` tipados) integrados a `MatFormField` — nunca template-driven forms.
 - **Sem `any`**: TypeScript estrito; todo dado vindo de API tem um tipo gerado a partir do OpenAPI (seção 6.2) ou uma interface em `libs/shared/models`.
-- **Nx module boundaries**: respeitar as tags/regras da skill [nx-workspace-standards](.claude/skills/nx-workspace-standards/SKILL.md); um `nx lint`/`nx graph` com violação de boundary é tratado como erro, não como aviso.
+- **Nx module boundaries**: respeitar as tags/regras da skill [nx-workspace-standards](.claude/skills/nx-workspace-standards/SKILL.md); não há enforcement automatizado (sem ESLint) — uma violação de boundary é pego na revisão (`angular-code-reviewer`/`/review-angular`), não por uma ferramenta, então tratar com o mesmo rigor de um erro bloqueante.
 - **Sem texto hardcoded**: todo texto visível ao usuário (label, botão, mensagem de erro, `aria-label`) vem de uma chave de tradução via `transloco` — nunca uma string literal no template ou no `.ts`. Ver skill [i18n-multi-language](.claude/skills/i18n-multi-language/SKILL.md).
 
 ## 5. Funcionalidades específicas do domínio
 
 ### 5.1 Lista de profissionais (cards) — `client-app`
-- Ordenação padrão por proximidade (geolocalização do usuário via `navigator.geolocation`, com fallback manual de endereço).
+
+- Busca inicial pela cidade do usuário: geolocalização via `navigator.geolocation` (com fallback manual de lat/lng) resolvida para uma cidade por geocoding reverso client-side (`ReverseGeocodingService`, Nominatim/OpenStreetMap); essa cidade é enviada ao backend como termo de busca (seção 6, `ProfessionalsService.search`).
 - Cada card exibe: foto, nome, lista de serviços, nota média em estrelas, distância aproximada, selo de destaque se aplicável.
 - Ver skill [professional-list-card](.claude/skills/professional-list-card/SKILL.md).
 
 ### 5.2 Avaliações e estrelas — compartilhado (`libs/shared/ui`)
+
 - Nota é sempre derivada (`computed`) da lista de `reviews`, nunca armazenada como campo editável solto no `Professional`.
 - Componente de estrelas é genérico e reutilizável entre os dois apps (exibição no `client-app`/`professional-portal`, e input de nota pelo usuário no `client-app`).
 - Ver skill [star-rating-reviews](.claude/skills/star-rating-reviews/SKILL.md).
 
 ### 5.3 Agendamento via Google Agenda (MCP) — dividido entre os dois apps
+
 - Cada usuário (tanto `User` quanto `Professional`) conecta sua própria Google Agenda, de forma independente (tokens OAuth isolados por conta, geridos inteiramente pelo backend .NET via MCP — nunca pelo Angular).
 - `client-app` (feature `booking`): consulta disponibilidade do profissional e cria o `Booking`.
 - `professional-portal` (feature `availability` + `incoming-bookings`): conecta a agenda, define regras de disponibilidade e aceita/recusa/gerencia agendamentos recebidos.
@@ -154,11 +234,13 @@ Regras:
 - Ver skill [google-calendar-mcp-scheduling](.claude/skills/google-calendar-mcp-scheduling/SKILL.md) e o agente [calendar-mcp-integrator](.claude/agents/calendar-mcp-integrator.md).
 
 ### 5.4 Dados sensíveis
+
 - Telefone, endereço exato e histórico de agendamento são dados sensíveis: nunca logar em console/analytics, nunca serializar em query params, mascarar em telas que não sejam do próprio usuário ou do profissional após confirmação do agendamento.
 
 ## 6. Camada de serviços/API
 
 Ver skill [angular-service-http-layer](.claude/skills/angular-service-http-layer/SKILL.md). Resumo:
+
 - Um service por agregado de domínio (`ProfessionalsService`, `BookingsService`, `ReviewsService`, `CalendarMcpService`) em `libs/shared/data-access`, reaproveitado pelos dois apps.
 - Serviços retornam `Observable<T>` tipado; conversão para signal (`toSignal`) acontece no componente/facade, não dentro do service.
 - Sem chamadas HTTP diretamente em componentes.
@@ -183,35 +265,37 @@ O JWT emitido pela API .NET é entregue como cookie `httpOnly` + `Secure` + `Sam
 ## 7. Estado
 
 Ver skill [angular-signals-state](.claude/skills/angular-signals-state/SKILL.md). Resumo:
+
 - Estado de feature em um `*.store.ts` baseado em signals, injetável no escopo da rota da feature (não global, salvo sessão/localização/idioma).
 - Estado global mínimo por app: sessão do usuário autenticado (via `/me`, seção 6.1), localização atual e idioma ativo (`LanguageStore`, `libs/shared/i18n`, ver skill [i18n-multi-language](.claude/skills/i18n-multi-language/SKILL.md)).
 - `client-app` e `professional-portal` têm cada um sua própria instância de `SessionStore` e `LanguageStore` — não há estado compartilhado em runtime entre os dois apps (são processos de browser separados).
 
 ## 8. Agentes disponíveis (.claude/agents)
 
-| Agente | Quando usar |
-|---|---|
-| [angular-component-architect](.claude/agents/angular-component-architect.md) | Criar ou refatorar componentes/features Angular seguindo os padrões deste arquivo, incluindo boundaries Nx e uso de Material. |
-| [angular-code-reviewer](.claude/agents/angular-code-reviewer.md) | Revisar um diff/PR Angular quanto a aderência a estes padrões (não é revisão geral de segurança). |
-| [calendar-mcp-integrator](.claude/agents/calendar-mcp-integrator.md) | Desenhar ou revisar a integração de agendamento via MCP com Google Agenda, incluindo o fluxo dividido entre `client-app` e `professional-portal`. |
+| Agente                                                                       | Quando usar                                                                                                                                       |
+| ---------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [angular-component-architect](.claude/agents/angular-component-architect.md) | Criar ou refatorar componentes/features Angular seguindo os padrões deste arquivo, incluindo boundaries Nx e uso de Material.                     |
+| [angular-code-reviewer](.claude/agents/angular-code-reviewer.md)             | Revisar um diff/PR Angular quanto a aderência a estes padrões (não é revisão geral de segurança).                                                 |
+| [calendar-mcp-integrator](.claude/agents/calendar-mcp-integrator.md)         | Desenhar ou revisar a integração de agendamento via MCP com Google Agenda, incluindo o fluxo dividido entre `client-app` e `professional-portal`. |
 
 ## 9. Comandos disponíveis (.claude/commands)
 
-| Comando | Uso |
-|---|---|
+| Comando                               | Uso                                                                                             |
+| ------------------------------------- | ----------------------------------------------------------------------------------------------- |
 | `/new-component <nome> [app\|shared]` | Gera um standalone component seguindo o padrão do projeto, no app certo ou em `libs/shared/ui`. |
-| `/new-service <nome>` | Gera um service HTTP em `libs/shared/data-access` seguindo o padrão de camada de serviços. |
-| `/new-feature <nome> <app>` | Gera a estrutura completa de uma feature dentro de `client-app` ou `professional-portal`. |
-| `/new-lib <nome> <tipo>` | Gera uma lib Nx nova (`ui`, `data-access`, `util`, `models`) com as tags/boundaries corretas. |
-| `/review-angular` | Roda o checklist de revisão Angular deste projeto sobre as mudanças atuais. |
+| `/new-service <nome>`                 | Gera um service HTTP em `libs/shared/data-access` seguindo o padrão de camada de serviços.      |
+| `/new-feature <nome> <app>`           | Gera a estrutura completa de uma feature dentro de `client-app` ou `professional-portal`.       |
+| `/new-lib <nome> <tipo>`              | Gera uma lib Nx nova (`ui`, `data-access`, `util`, `models`) com as tags/boundaries corretas.   |
+| `/review-angular`                     | Roda o checklist de revisão Angular deste projeto sobre as mudanças atuais.                     |
 
 ## 10. Qualidade e definição de pronto
 
 Uma mudança só é considerada pronta quando:
+
 - Segue a arquitetura de pastas/libs da seção 3 e os module boundaries do Nx (seção 4).
 - Não introduz `NgModule`, `*ngIf`/`*ngFor`, `@Input()`/`@Output()` decorators, `any`, `localStorage`/`document.cookie` para auth, ou chamada HTTP sem `withCredentials`.
 - Reaproveita componentes Angular Material em vez de recriá-los, salvo justificativa.
 - Não introduz texto de UI hardcoded — toda chave nova existe nos três idiomas (`pt-BR`, `en`, `es`), ver skill [i18n-multi-language](.claude/skills/i18n-multi-language/SKILL.md).
 - Tem teste unitário para lógica não trivial (cálculo de distância, média de estrelas, regras de agendamento).
 - Não expõe dados sensíveis (seção 5.4) fora do contexto permitido.
-- Passa `nx lint`, `nx test` e `nx run-many --target=lint --target=test` (afetados) sem novos warnings, incluindo Prettier e as regras de commit (Conventional Commits via commitlint).
+- Passa `nx test`/`nx affected --target=test` sem novas falhas, incluindo formatação via Prettier e as regras de commit (Conventional Commits via commitlint). Não há `nx lint` neste projeto (ver seção 2).

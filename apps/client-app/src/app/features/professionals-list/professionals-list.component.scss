@@ -1,0 +1,80 @@
+.professionals-list__toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1rem;
+  height: auto;
+  min-height: 64px;
+  padding-block: 0.5rem;
+}
+
+.professionals-list__spacer {
+  flex: 1 1 auto;
+}
+
+.professionals-list__welcome {
+  font-size: 0.95rem;
+}
+
+.professionals-list {
+  padding: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  @media (min-width: 600px) {
+    padding: 1.5rem;
+  }
+}
+
+.professionals-list__state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 2rem 0;
+}
+
+.professionals-list__hint {
+  color: var(--mat-sys-on-surface-variant, #555);
+}
+
+.professionals-list__search {
+  width: 100%;
+
+  @media (min-width: 600px) {
+    max-width: 420px;
+  }
+}
+
+.professionals-list__manual-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+}
+
+.professionals-list__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+
+  @media (min-width: 480px) {
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  }
+
+  @media (min-width: 600px) {
+    gap: 1.5rem;
+  }
+}
+
+.professionals-list__card-button {
+  all: unset;
+  cursor: pointer;
+  display: block;
+
+  &:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+  }
+}

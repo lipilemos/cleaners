@@ -1,0 +1,5 @@
+{
+  "name": "i18n",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "tags": ["scope:shared", "type:i18n"]
+}

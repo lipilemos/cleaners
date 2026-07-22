@@ -1,0 +1,9 @@
+{
+  "required": "Este campo es obligatorio.",
+  "email": "Ingresa un correo válido.",
+  "pattern": "Formato inválido.",
+  "minlength": "Demasiado corto.",
+  "maxlength": "Demasiado largo.",
+  "phone": "Ingresa un teléfono válido.",
+  "outOfRange": "El valor está fuera del rango permitido."
+}

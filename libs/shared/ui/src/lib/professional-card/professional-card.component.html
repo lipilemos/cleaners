@@ -1,0 +1,66 @@
+<mat-card class="professional-card" appearance="outlined">
+  @if (professional().isFeatured) {
+    <span class="professional-card__badge">{{
+      'professionalCard.featuredBadge' | transloco
+    }}</span>
+  }
+
+  @if (professional().photoUrl) {
+    <img
+      class="professional-card__photo"
+      [src]="professional().photoUrl"
+      [alt]="professional().name"
+      loading="lazy"
+    />
+  } @else {
+    <div class="professional-card__photo professional-card__photo--placeholder">
+      <mat-icon>person</mat-icon>
+    </div>
+  }
+
+  <mat-card-header>
+    <mat-card-title>{{ professional().name }}</mat-card-title>
+    @if (professional().distanceKm !== undefined) {
+      <mat-card-subtitle>
+        {{
+          'professionalCard.distanceLabel'
+            | transloco: { distance: professional().distanceKm }
+        }}
+      </mat-card-subtitle>
+    } @else if (professional().city) {
+      <mat-card-subtitle>
+        {{
+          'professionalCard.cityLabel'
+            | transloco
+              : { city: professional().city, state: professional().state }
+        }}
+      </mat-card-subtitle>
+    }
+  </mat-card-header>
+
+  <mat-card-content>
+    <div class="professional-card__rating">
+      <app-star-rating
+        [value]="professional().averageRating"
+        [readonly]="true"
+      />
+      <span
+        class="professional-card__review-count"
+        [attr.aria-label]="
+          'professionalCard.reviewCountLabel'
+            | transloco: { count: professional().reviewCount }
+        "
+      >
+        ({{ professional().reviewCount }})
+      </span>
+    </div>
+
+    <mat-chip-set
+      [attr.aria-label]="'professionalCard.servicesAriaLabel' | transloco"
+    >
+      @for (serviceName of professional().serviceNames; track serviceName) {
+        <mat-chip disabled>{{ serviceName }}</mat-chip>
+      }
+    </mat-chip-set>
+  </mat-card-content>
+</mat-card>

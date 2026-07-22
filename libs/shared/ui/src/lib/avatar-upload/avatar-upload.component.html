@@ -1,0 +1,34 @@
+<div class="avatar-upload">
+  <button
+    type="button"
+    class="avatar-upload__photo"
+    [disabled]="uploading()"
+    [attr.aria-label]="'avatarUpload.changePhotoAriaLabel' | transloco"
+    [matTooltip]="'avatarUpload.changePhotoAriaLabel' | transloco"
+    (click)="openFilePicker()"
+  >
+    @if (photoUrl()) {
+      <img [src]="photoUrl()" [alt]="name()" />
+    } @else {
+      <mat-icon>person</mat-icon>
+    }
+
+    @if (uploading()) {
+      <div class="avatar-upload__overlay">
+        <mat-progress-spinner mode="indeterminate" diameter="28" />
+      </div>
+    } @else {
+      <span class="avatar-upload__badge">
+        <mat-icon>photo_camera</mat-icon>
+      </span>
+    }
+  </button>
+
+  <input
+    #fileInput
+    type="file"
+    class="avatar-upload__input"
+    [accept]="acceptedContentTypes"
+    (change)="handleFileChange($event)"
+  />
+</div>

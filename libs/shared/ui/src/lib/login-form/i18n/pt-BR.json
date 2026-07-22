@@ -1,0 +1,8 @@
+{
+  "title": "Entrar",
+  "emailLabel": "E-mail",
+  "passwordLabel": "Senha",
+  "submitButton": "Entrar",
+  "loadingLabel": "Entrando...",
+  "invalidCredentialsMessage": "E-mail ou senha inválidos."
+}

@@ -1,0 +1,119 @@
+<div class="user-profile">
+  <h1>{{ 'userProfile.title' | transloco }}</h1>
+
+  @if (loading()) {
+    <div class="user-profile__state" role="status">
+      <mat-progress-spinner mode="indeterminate" diameter="32" />
+      <p>{{ 'userProfile.loadingMessage' | transloco }}</p>
+    </div>
+  } @else if (loadErrorKey(); as errorKey) {
+    <p role="alert">{{ errorKey | transloco }}</p>
+  } @else {
+    <mat-card appearance="outlined">
+      <mat-card-content>
+        <div class="user-profile__avatar">
+          <app-avatar-upload
+            [photoUrl]="photoUrl()"
+            [name]="userName()"
+            [uploading]="uploadingPhoto()"
+            (fileSelected)="handlePhotoSelected($event)"
+            (validationError)="handlePhotoValidationError($event)"
+          />
+        </div>
+
+        <form
+          [formGroup]="form"
+          (ngSubmit)="submit()"
+          class="user-profile__form"
+        >
+          <mat-form-field>
+            <mat-label>{{ 'userProfile.nameLabel' | transloco }}</mat-label>
+            <input matInput formControlName="name" autocomplete="name" />
+            <app-form-field-error [control]="form.controls.name" />
+          </mat-form-field>
+
+          <app-phone-input formControlName="phone" />
+          <app-form-field-error [control]="form.controls.phone" />
+
+          <h2>{{ 'userProfile.addressTitle' | transloco }}</h2>
+          <div formGroupName="address" class="user-profile__address">
+            <mat-form-field>
+              <mat-label>{{ 'userProfile.streetLabel' | transloco }}</mat-label>
+              <input
+                matInput
+                formControlName="street"
+                autocomplete="address-line1"
+              />
+              <app-form-field-error
+                [control]="form.controls.address.controls.street"
+              />
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>{{ 'userProfile.numberLabel' | transloco }}</mat-label>
+              <input matInput formControlName="number" />
+              <app-form-field-error
+                [control]="form.controls.address.controls.number"
+              />
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>{{ 'userProfile.cityLabel' | transloco }}</mat-label>
+              <input
+                matInput
+                formControlName="city"
+                autocomplete="address-level2"
+              />
+              <app-form-field-error
+                [control]="form.controls.address.controls.city"
+              />
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>{{ 'userProfile.stateLabel' | transloco }}</mat-label>
+              <input
+                matInput
+                formControlName="state"
+                autocomplete="address-level1"
+              />
+              <app-form-field-error
+                [control]="form.controls.address.controls.state"
+              />
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>{{
+                'userProfile.zipCodeLabel' | transloco
+              }}</mat-label>
+              <input
+                matInput
+                formControlName="zipCode"
+                autocomplete="postal-code"
+              />
+              <app-form-field-error
+                [control]="form.controls.address.controls.zipCode"
+              />
+            </mat-form-field>
+          </div>
+
+          @if (saveErrorKey(); as saveError) {
+            <p role="alert">{{ saveError | transloco }}</p>
+          }
+
+          <button
+            mat-flat-button
+            type="submit"
+            color="primary"
+            [disabled]="saving()"
+          >
+            @if (saving()) {
+              {{ 'common.loading' | transloco }}
+            } @else {
+              {{ 'common.saveButton' | transloco }}
+            }
+          </button>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  }
+</div>

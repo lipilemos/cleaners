@@ -1,0 +1,98 @@
+{
+  "login": {
+    "title": "Log in to the professional portal",
+    "registerLink": "Don't have an account? Create a professional account"
+  },
+  "register": {
+    "title": "Create professional account",
+    "loginLink": "Already have an account? Sign in"
+  },
+  "portalToolbar": {
+    "welcomeTitle": "Hello, {{name}}!",
+    "availabilityLink": "Availability",
+    "incomingBookingsLink": "Incoming bookings",
+    "reviewsReceivedLink": "Reviews",
+    "professionalProfileLink": "My services",
+    "logoutButton": "Log out"
+  },
+  "availability": {
+    "title": "Availability",
+    "connectionTitle": "Google Calendar",
+    "connectionLoadingMessage": "Checking your calendar connection...",
+    "connectedMessage": "Your Google Calendar is connected.",
+    "notConnectedMessage": "Your Google Calendar is not connected yet. Connect it to receive booking requests.",
+    "connectionLoadErrorMessage": "We couldn't check your calendar connection.",
+    "connectButton": "Connect Google Calendar",
+    "connectionStartErrorMessage": "We couldn't start the Google Calendar connection. Please try again.",
+    "rulesTitle": "Working days and hours",
+    "rulesLoadingMessage": "Loading your availability rules...",
+    "rulesLoadErrorMessage": "We couldn't load your availability rules.",
+    "startTimeLabel": "Start",
+    "endTimeLabel": "End",
+    "invalidTimeRangeError": "The start time must be before the end time.",
+    "rulesSaveErrorMessage": "We couldn't save your availability rules. Please try again.",
+    "rulesSaveSuccessMessage": "Availability updated successfully.",
+    "days": {
+      "sunday": "Sunday",
+      "monday": "Monday",
+      "tuesday": "Tuesday",
+      "wednesday": "Wednesday",
+      "thursday": "Thursday",
+      "friday": "Friday",
+      "saturday": "Saturday"
+    }
+  },
+  "incomingBookings": {
+    "title": "Booking requests",
+    "loadingMessage": "Loading your bookings...",
+    "loadErrorMessage": "We couldn't load your bookings.",
+    "pendingTabLabel": "Pending ({{count}})",
+    "emptyPendingMessage": "No pending requests right now.",
+    "acceptButton": "Accept",
+    "rejectButton": "Decline",
+    "acceptErrorMessage": "We couldn't accept this booking. Please try again.",
+    "rejectErrorMessage": "We couldn't decline this booking. Please try again.",
+    "confirmedTabLabel": "Confirmed",
+    "emptyConfirmedMessage": "No confirmed bookings right now.",
+    "contactTitle": "Customer contact",
+    "callButtonAriaLabel": "Call {{name}}",
+    "historyTabLabel": "History",
+    "emptyHistoryMessage": "No completed or cancelled bookings yet.",
+    "statusLabel": "Status"
+  },
+  "bookingStatus": {
+    "pending": "Awaiting confirmation",
+    "confirmed": "Confirmed",
+    "completed": "Completed",
+    "cancelled": "Cancelled"
+  },
+  "reviewsReceived": {
+    "title": "Reviews received",
+    "loadingMessage": "Loading your reviews...",
+    "loadErrorMessage": "We couldn't load your reviews.",
+    "reviewCountLabel": "{{count}} reviews",
+    "emptyMessage": "You haven't received any reviews yet."
+  },
+  "professionalProfile": {
+    "title": "My services",
+    "loadingMessage": "Loading your services...",
+    "loadErrorMessage": "We couldn't load your services.",
+    "addTitle": "Add service",
+    "nameLabel": "Service name",
+    "descriptionLabel": "Description",
+    "priceFromLabel": "Price starting at",
+    "durationMinutesLabel": "Duration (minutes)",
+    "addButton": "Add",
+    "addErrorMessage": "We couldn't add this service. Please try again.",
+    "addSuccessMessage": "Service added successfully.",
+    "servicesTitle": "Services offered",
+    "emptyMessage": "You haven't added any services yet.",
+    "priceFromDisplay": "Starting at {{price}}",
+    "durationDisplay": "{{minutes}} min",
+    "editButton": "Edit",
+    "removeButton": "Remove",
+    "editDialogTitle": "Edit service",
+    "updateErrorMessage": "We couldn't save the changes to this service. Please try again.",
+    "removeErrorMessage": "We couldn't remove this service. Please try again."
+  }
+}

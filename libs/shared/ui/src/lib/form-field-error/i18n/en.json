@@ -1,0 +1,9 @@
+{
+  "required": "This field is required.",
+  "email": "Enter a valid email address.",
+  "pattern": "Invalid format.",
+  "minlength": "Too short.",
+  "maxlength": "Too long.",
+  "phone": "Enter a valid phone number.",
+  "outOfRange": "Value is out of the allowed range."
+}

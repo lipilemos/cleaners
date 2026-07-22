@@ -1,0 +1,33 @@
+<div
+  class="star-rating"
+  [class.star-rating--interactive]="!readonly()"
+  [attr.role]="readonly() ? 'img' : 'radiogroup'"
+  [attr.aria-label]="
+    'starRating.ariaLabel' | transloco: { value: value(), max: max() }
+  "
+>
+  @for (position of starPositions(); track position) {
+    @if (readonly()) {
+      <span class="star-rating__star" aria-hidden="true">
+        <mat-icon fontSet="material-symbols-outlined">{{
+          starIcon(position)
+        }}</mat-icon>
+      </span>
+    } @else {
+      <button
+        type="button"
+        class="star-rating__star"
+        role="radio"
+        [attr.aria-checked]="position === value()"
+        [attr.aria-label]="
+          'starRating.starLabel' | transloco: { position: position }
+        "
+        (click)="select(position)"
+      >
+        <mat-icon fontSet="material-symbols-outlined">{{
+          starIcon(position)
+        }}</mat-icon>
+      </button>
+    }
+  }
+</div>

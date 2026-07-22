@@ -1,0 +1,46 @@
+<h2 mat-dialog-title>
+  {{ 'professionalProfile.editDialogTitle' | transloco }}
+</h2>
+
+<form [formGroup]="form" (ngSubmit)="save()">
+  <mat-dialog-content class="edit-service-dialog__content">
+    <mat-form-field>
+      <mat-label>{{ 'professionalProfile.nameLabel' | transloco }}</mat-label>
+      <input matInput formControlName="name" />
+      <app-form-field-error [control]="form.controls.name" />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>{{
+        'professionalProfile.descriptionLabel' | transloco
+      }}</mat-label>
+      <textarea matInput rows="3" formControlName="description"></textarea>
+      <app-form-field-error [control]="form.controls.description" />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>{{
+        'professionalProfile.priceFromLabel' | transloco
+      }}</mat-label>
+      <input matInput type="number" min="0" formControlName="price" />
+      <app-form-field-error [control]="form.controls.price" />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>{{
+        'professionalProfile.durationMinutesLabel' | transloco
+      }}</mat-label>
+      <input matInput type="number" min="1" formControlName="durationMinutes" />
+      <app-form-field-error [control]="form.controls.durationMinutes" />
+    </mat-form-field>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button type="button" (click)="cancel()">
+      {{ 'common.cancelButton' | transloco }}
+    </button>
+    <button mat-flat-button type="submit" color="primary">
+      {{ 'common.saveButton' | transloco }}
+    </button>
+  </mat-dialog-actions>
+</form>

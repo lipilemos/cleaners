@@ -1,0 +1,13 @@
+{
+  "title": "Criar conta",
+  "nameLabel": "Nome",
+  "emailLabel": "E-mail",
+  "phoneLabel": "Telefone",
+  "passwordLabel": "Senha",
+  "confirmPasswordLabel": "Confirmar senha",
+  "submitButton": "Criar conta",
+  "loadingLabel": "Criando conta...",
+  "passwordMismatchMessage": "As senhas não coincidem.",
+  "emailAlreadyRegisteredMessage": "Já existe uma conta com este e-mail.",
+  "genericErrorMessage": "Não foi possível criar sua conta. Tente novamente."
+}

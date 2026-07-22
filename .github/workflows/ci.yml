@@ -1,0 +1,34 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  affected:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: 'npm'
+
+      - run: npm ci
+
+      # Base = último commit da branch alvo antes deste push/PR — nunca roda os projetos inteiros a cada mudança
+      # pequena (ver CLAUDE.md secao 10 e skill nx-workspace-standards).
+      - uses: nrwl/nx-set-shas@v4
+
+      - run: npx nx format:check --base=$NX_BASE --head=$NX_HEAD
+      - run: npx nx affected --target=lint --base=$NX_BASE --head=$NX_HEAD
+      - run: npx nx affected --target=test --base=$NX_BASE --head=$NX_HEAD
+      - run: npx nx affected --target=build --base=$NX_BASE --head=$NX_HEAD

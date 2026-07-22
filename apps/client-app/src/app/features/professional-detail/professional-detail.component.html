@@ -1,0 +1,87 @@
+<div class="professional-detail">
+  <button mat-button type="button" (click)="goBack()">
+    <mat-icon>arrow_back</mat-icon>
+    {{ 'common.backButton' | transloco }}
+  </button>
+
+  @if (store.loading()) {
+    <div class="professional-detail__state" role="status">
+      <mat-progress-spinner mode="indeterminate" diameter="32" />
+      <p>{{ 'professionalDetail.loadingMessage' | transloco }}</p>
+    </div>
+  } @else if (store.error(); as errorKey) {
+    <p role="alert">{{ errorKey | transloco }}</p>
+  } @else if (store.professional(); as professional) {
+    <mat-card appearance="outlined" class="professional-detail__profile">
+      <img
+        class="professional-detail__photo"
+        [src]="professional.photoUrl"
+        [alt]="professional.name"
+      />
+      <mat-card-header>
+        <mat-card-title>{{ professional.name }}</mat-card-title>
+        <mat-card-subtitle>
+          {{ professional.city }}, {{ professional.state }}
+        </mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="professional-detail__rating">
+          <app-star-rating [value]="store.averageRating()" [readonly]="true" />
+          <span>
+            {{
+              'professionalDetail.reviewCountLabel'
+                | transloco: { count: store.reviewCount() }
+            }}
+          </span>
+        </div>
+
+        <h2>{{ 'professionalDetail.servicesTitle' | transloco }}</h2>
+        <mat-chip-set
+          [attr.aria-label]="'professionalDetail.servicesAriaLabel' | transloco"
+        >
+          @for (service of professional.services; track service.id) {
+            <mat-chip disabled>{{ service.name }}</mat-chip>
+          }
+        </mat-chip-set>
+
+        @if (!professional.hasConnectedCalendar) {
+          <p class="professional-detail__hint" role="alert">
+            {{ 'professionalDetail.calendarNotConnectedMessage' | transloco }}
+          </p>
+        }
+      </mat-card-content>
+      <mat-card-actions>
+        <button
+          mat-flat-button
+          type="button"
+          color="primary"
+          [disabled]="!professional.hasConnectedCalendar"
+          (click)="scheduleBooking()"
+        >
+          {{ 'professionalDetail.scheduleButton' | transloco }}
+        </button>
+      </mat-card-actions>
+    </mat-card>
+
+    <section class="professional-detail__reviews">
+      <h2>{{ 'professionalDetail.reviewsTitle' | transloco }}</h2>
+      @if (store.reviews().length === 0) {
+        <p>{{ 'professionalDetail.noReviewsMessage' | transloco }}</p>
+      } @else {
+        @for (review of store.reviews(); track review.id) {
+          <mat-card appearance="outlined" class="professional-detail__review">
+            <mat-card-content>
+              <app-star-rating [value]="review.rating" [readonly]="true" />
+              <p class="professional-detail__review-author">
+                {{ review.authorName }}
+              </p>
+              @if (review.comment) {
+                <p>{{ review.comment }}</p>
+              }
+            </mat-card-content>
+          </mat-card>
+        }
+      }
+    </section>
+  }
+</div>

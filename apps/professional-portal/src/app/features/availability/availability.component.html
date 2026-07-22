@@ -1,0 +1,113 @@
+<app-portal-toolbar />
+
+<div class="availability">
+  <h1>{{ 'availability.title' | transloco }}</h1>
+
+  <mat-card appearance="outlined" class="availability__connection">
+    <mat-card-header>
+      <mat-card-title>{{
+        'availability.connectionTitle' | transloco
+      }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      @if (store.connectionLoading()) {
+        <div class="availability__state" role="status">
+          <mat-progress-spinner mode="indeterminate" diameter="24" />
+          <p>{{ 'availability.connectionLoadingMessage' | transloco }}</p>
+        </div>
+      } @else if (store.isConnected()) {
+        <p class="availability__connected">
+          {{ 'availability.connectedMessage' | transloco }}
+        </p>
+      } @else {
+        <p role="alert">{{ 'availability.notConnectedMessage' | transloco }}</p>
+      }
+
+      @if (store.connectionError(); as errorKey) {
+        <p role="alert">{{ errorKey | transloco }}</p>
+      }
+    </mat-card-content>
+    @if (!store.connectionLoading() && !store.isConnected()) {
+      <mat-card-actions>
+        <button
+          mat-flat-button
+          type="button"
+          color="primary"
+          [disabled]="store.connecting()"
+          (click)="connectCalendar()"
+        >
+          @if (store.connecting()) {
+            {{ 'common.loading' | transloco }}
+          } @else {
+            {{ 'availability.connectButton' | transloco }}
+          }
+        </button>
+      </mat-card-actions>
+    }
+  </mat-card>
+
+  <mat-card appearance="outlined" class="availability__rules">
+    <mat-card-header>
+      <mat-card-title>{{
+        'availability.rulesTitle' | transloco
+      }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      @if (store.rulesLoading()) {
+        <div class="availability__state" role="status">
+          <mat-progress-spinner mode="indeterminate" diameter="24" />
+          <p>{{ 'availability.rulesLoadingMessage' | transloco }}</p>
+        </div>
+      } @else if (store.rulesError(); as errorKey) {
+        <p role="alert">{{ errorKey | transloco }}</p>
+      } @else {
+        <form class="availability__rules-form" (ngSubmit)="submitRules()">
+          @for (row of dayRows; track row.labelKey) {
+            <div class="availability__day-row" [formGroup]="row.control">
+              <mat-slide-toggle formControlName="enabled">
+                {{ row.labelKey | transloco }}
+              </mat-slide-toggle>
+
+              <mat-form-field class="availability__time-field">
+                <mat-label>{{
+                  'availability.startTimeLabel' | transloco
+                }}</mat-label>
+                <input matInput type="time" formControlName="startTime" />
+              </mat-form-field>
+
+              <mat-form-field class="availability__time-field">
+                <mat-label>{{
+                  'availability.endTimeLabel' | transloco
+                }}</mat-label>
+                <input matInput type="time" formControlName="endTime" />
+              </mat-form-field>
+
+              @if (row.control.invalid && row.control.touched) {
+                <p role="alert" class="availability__row-error">
+                  {{ 'availability.invalidTimeRangeError' | transloco }}
+                </p>
+              }
+            </div>
+          }
+
+          @if (store.saveError(); as saveErrorKey) {
+            <p role="alert">{{ saveErrorKey | transloco }}</p>
+          }
+
+          <button
+            mat-flat-button
+            type="submit"
+            color="primary"
+            [disabled]="store.saving()"
+          >
+            @if (store.saving()) {
+              {{ 'common.loading' | transloco }}
+            } @else {
+              {{ 'common.saveButton' | transloco }}
+            }
+          </button>
+        </form>
+      }
+    </mat-card-content>
+  </mat-card>
+</div>

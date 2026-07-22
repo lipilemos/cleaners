@@ -1,0 +1,14 @@
+@if (pwaInstall.canInstall()) {
+<div class="install-banner">
+  <button
+    mat-stroked-button
+    type="button"
+    [attr.aria-label]="'shell.installButtonAriaLabel' | transloco"
+    (click)="install()"
+  >
+    <mat-icon aria-hidden="true">install_mobile</mat-icon>
+    {{ 'shell.installButton' | transloco }}
+  </button>
+</div>
+}
+<router-outlet></router-outlet>

@@ -1,0 +1,136 @@
+{
+  "name": "client-app",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "prefix": "app",
+  "sourceRoot": "apps/client-app/src",
+  "tags": ["scope:client", "type:app"],
+  "targets": {
+    "build": {
+      "executor": "@angular/build:application",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "outputPath": "dist/apps/client-app",
+        "browser": "apps/client-app/src/main.ts",
+        "tsConfig": "apps/client-app/tsconfig.app.json",
+        "inlineStyleLanguage": "scss",
+        "assets": [
+          {
+            "glob": "**/*",
+            "input": "apps/client-app/public"
+          },
+          {
+            "glob": "**/*",
+            "input": "libs/shared/i18n/src/lib/common",
+            "output": "assets/i18n/common"
+          },
+          {
+            "glob": "**/*",
+            "input": "libs/shared/ui/src/lib/star-rating/i18n",
+            "output": "assets/i18n/starRating"
+          },
+          {
+            "glob": "**/*",
+            "input": "libs/shared/ui/src/lib/professional-card/i18n",
+            "output": "assets/i18n/professionalCard"
+          },
+          {
+            "glob": "**/*",
+            "input": "libs/shared/ui/src/lib/form-field-error/i18n",
+            "output": "assets/i18n/formFieldError"
+          },
+          {
+            "glob": "**/*",
+            "input": "libs/shared/ui/src/lib/phone-input/i18n",
+            "output": "assets/i18n/phoneInput"
+          },
+          {
+            "glob": "**/*",
+            "input": "libs/shared/ui/src/lib/login-form/i18n",
+            "output": "assets/i18n/loginForm"
+          },
+          {
+            "glob": "**/*",
+            "input": "libs/shared/ui/src/lib/register-form/i18n",
+            "output": "assets/i18n/registerForm"
+          },
+          {
+            "glob": "**/*",
+            "input": "libs/shared/ui/src/lib/avatar-upload/i18n",
+            "output": "assets/i18n/avatarUpload"
+          }
+        ],
+        "styles": ["apps/client-app/src/styles.scss"]
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "550kb",
+              "maximumError": "1mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "4kb",
+              "maximumError": "8kb"
+            }
+          ],
+          "outputHashing": "all",
+          "fileReplacements": [
+            {
+              "replace": "apps/client-app/src/environments/environment.ts",
+              "with": "apps/client-app/src/environments/environment.prod.ts"
+            }
+          ],
+          "serviceWorker": "apps/client-app/ngsw-config.json"
+        },
+        "development": {
+          "optimization": false,
+          "extractLicenses": false,
+          "sourceMap": true
+        },
+        "local": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "550kb",
+              "maximumError": "1mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "4kb",
+              "maximumError": "8kb"
+            }
+          ],
+          "outputHashing": "all",
+          "serviceWorker": "apps/client-app/ngsw-config.json"
+        }
+      }
+    },
+    "serve": {
+      "continuous": true,
+      "executor": "@angular/build:dev-server",
+      "defaultConfiguration": "development",
+      "configurations": {
+        "production": {
+          "buildTarget": "client-app:build:production"
+        },
+        "development": {
+          "buildTarget": "client-app:build:development"
+        }
+      }
+    },
+    "serve-static": {
+      "continuous": true,
+      "executor": "@nx/web:file-server",
+      "options": {
+        "buildTarget": "client-app:build",
+        "port": 4200,
+        "staticFilePath": "dist/apps/client-app/browser",
+        "spa": true
+      }
+    }
+  }
+}
