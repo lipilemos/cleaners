@@ -87,14 +87,13 @@
   }
 
   &__calendar {
-    // Grande, ocupando toda a largura disponível da aba (pedido explícito: melhor visualização da
-    // agenda completa) — Material dimensiona a tabela do mês em %, então esticar o container também
-    // aumenta proporcionalmente cada célula/dia.
-    width: 98%;
+    // Largura limitada: a tabela do mês do Material mantém células quadradas (altura de cada
+    // linha = largura/7), então a altura total escala junto com a largura.
+    width: 100%;
+    max-width: 800px;
+    align-self: center;
     border: 1px solid var(--mat-sys-outline-variant, rgba(0, 0, 0, 0.12));
     border-radius: 4px;
-    --mat-datepicker-calendar-text-size: 1rem;
-    --mat-datepicker-calendar-period-button-text-size: 1.25rem;
   }
 
   &__calendar-day-panel {

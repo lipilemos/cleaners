@@ -1,13 +1,16 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Professional, Service } from '@cleaners/models';
+import { Professional, ProfessionalAccount, Service } from '@cleaners/models';
 import { API_BASE_URL } from '@cleaners/util';
 import { Observable, map } from 'rxjs';
 import {
   CreateServiceRequest,
+  ProfessionalAccountDataDto,
   ProfessionalProfileDto,
   ServiceDto,
+  UpdateProfessionalAccountDataRequest,
   UpdateServiceRequest,
+  toProfessionalAccountModel,
   toProfessionalProfileModel,
   toServiceModel,
 } from './professional-profile.dto';
@@ -25,6 +28,27 @@ export class ProfessionalProfileService {
     return this.http
       .get<ProfessionalProfileDto>(`${this.apiBaseUrl}/professionals/me`)
       .pipe(map(toProfessionalProfileModel));
+  }
+
+  // "Meus dados" (aba própria, distinta do perfil público retornado por getMine acima) — dados
+  // sensíveis (telefone, endereço, CLAUDE.md secao 5.4) só trafegam no corpo da requisição.
+  getMineAccountData(): Observable<ProfessionalAccount> {
+    return this.http
+      .get<ProfessionalAccountDataDto>(
+        `${this.apiBaseUrl}/professionals/me/account-data`,
+      )
+      .pipe(map(toProfessionalAccountModel));
+  }
+
+  updateMineAccountData(
+    request: UpdateProfessionalAccountDataRequest,
+  ): Observable<ProfessionalAccount> {
+    return this.http
+      .put<ProfessionalAccountDataDto>(
+        `${this.apiBaseUrl}/professionals/me/account-data`,
+        request,
+      )
+      .pipe(map(toProfessionalAccountModel));
   }
 
   addService(request: CreateServiceRequest): Observable<Service> {

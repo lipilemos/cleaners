@@ -14,7 +14,7 @@
     "availabilityLink": "Disponibilidad",
     "incomingBookingsLink": "Pedidos recibidos",
     "reviewsReceivedLink": "Reseñas",
-    "professionalProfileLink": "Mis servicios"
+    "professionalProfileLink": "Mi perfil"
   },
   "availability": {
     "title": "Disponibilidad",
@@ -83,13 +83,34 @@
     "emptyMessage": "Todavía no has recibido reseñas."
   },
   "professionalProfile": {
-    "title": "Mis servicios",
+    "title": "Mi perfil",
+    "personalDataTabLabel": "Mis datos",
+    "servicesTabLabel": "Mis servicios",
+    "personalData": {
+      "loadingMessage": "Cargando tus datos...",
+      "loadErrorMessage": "No pudimos cargar tus datos.",
+      "nameLabel": "Nombre",
+      "emailLabel": "Correo electrónico",
+      "addressTitle": "Dirección",
+      "streetLabel": "Dirección",
+      "cityLabel": "Ciudad",
+      "stateLabel": "Provincia",
+      "zipCodeLabel": "Código postal",
+      "saveSuccessMessage": "Tus datos se actualizaron correctamente.",
+      "saveErrorMessage": "No pudimos guardar tus datos. Inténtalo de nuevo."
+    },
     "loadingMessage": "Cargando tus servicios...",
     "loadErrorMessage": "No pudimos cargar tus servicios.",
     "addTitle": "Agregar servicio",
     "nameLabel": "Nombre del servicio",
     "descriptionLabel": "Descripción",
     "priceFromLabel": "Precio a partir de",
+    "currencyLabel": "Moneda",
+    "currencies": {
+      "brl": "Real (R$)",
+      "usd": "Dólar (US$)",
+      "eur": "Euro (€)"
+    },
     "durationMinutesLabel": "Duración (minutos)",
     "addButton": "Agregar",
     "addErrorMessage": "No pudimos agregar este servicio. Inténtalo de nuevo.",

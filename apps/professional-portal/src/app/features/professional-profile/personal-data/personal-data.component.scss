@@ -1,0 +1,22 @@
+.personal-data {
+  padding: 24px 0;
+  max-width: 640px;
+
+  &__state {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  &__address {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+}

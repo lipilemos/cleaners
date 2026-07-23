@@ -14,7 +14,7 @@
     "availabilityLink": "Disponibilidade",
     "incomingBookingsLink": "Pedidos recebidos",
     "reviewsReceivedLink": "Avaliações",
-    "professionalProfileLink": "Meus serviços"
+    "professionalProfileLink": "Meu perfil"
   },
   "availability": {
     "title": "Disponibilidade",
@@ -56,7 +56,7 @@
     "calendarLegendCancelled": "Cancelado",
     "pendingTabLabel": "Pendentes ({{count}})",
     "emptyPendingMessage": "Nenhum pedido pendente no momento.",
-    "freeEstimateLabel": "Visita para orçamento gratuito",
+    "freeEstimateLabel": "Visita para orçamento",
     "acceptButton": "Aceitar",
     "rejectButton": "Recusar",
     "acceptErrorMessage": "Não foi possível aceitar este agendamento. Tente novamente.",
@@ -83,13 +83,34 @@
     "emptyMessage": "Você ainda não recebeu avaliações."
   },
   "professionalProfile": {
-    "title": "Meus serviços",
+    "title": "Meu perfil",
+    "personalDataTabLabel": "Meus dados",
+    "servicesTabLabel": "Meus serviços",
+    "personalData": {
+      "loadingMessage": "Carregando seus dados...",
+      "loadErrorMessage": "Não foi possível carregar seus dados.",
+      "nameLabel": "Nome",
+      "emailLabel": "E-mail",
+      "addressTitle": "Endereço",
+      "streetLabel": "Endereço",
+      "cityLabel": "Cidade",
+      "stateLabel": "Estado",
+      "zipCodeLabel": "CEP",
+      "saveSuccessMessage": "Dados atualizados com sucesso.",
+      "saveErrorMessage": "Não foi possível salvar seus dados. Tente novamente."
+    },
     "loadingMessage": "Carregando seus serviços...",
     "loadErrorMessage": "Não foi possível carregar seus serviços.",
     "addTitle": "Adicionar serviço",
     "nameLabel": "Nome do serviço",
     "descriptionLabel": "Descrição",
     "priceFromLabel": "Preço a partir de",
+    "currencyLabel": "Moeda",
+    "currencies": {
+      "brl": "Real (R$)",
+      "usd": "Dólar (US$)",
+      "eur": "Euro (€)"
+    },
     "durationMinutesLabel": "Duração (minutos)",
     "addButton": "Adicionar",
     "addErrorMessage": "Não foi possível adicionar este serviço. Tente novamente.",

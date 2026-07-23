@@ -14,7 +14,7 @@
     "availabilityLink": "Availability",
     "incomingBookingsLink": "Incoming bookings",
     "reviewsReceivedLink": "Reviews",
-    "professionalProfileLink": "My services"
+    "professionalProfileLink": "My profile"
   },
   "availability": {
     "title": "Availability",
@@ -83,13 +83,34 @@
     "emptyMessage": "You haven't received any reviews yet."
   },
   "professionalProfile": {
-    "title": "My services",
+    "title": "My profile",
+    "personalDataTabLabel": "My data",
+    "servicesTabLabel": "My services",
+    "personalData": {
+      "loadingMessage": "Loading your data...",
+      "loadErrorMessage": "We couldn't load your data.",
+      "nameLabel": "Name",
+      "emailLabel": "Email",
+      "addressTitle": "Address",
+      "streetLabel": "Street",
+      "cityLabel": "City",
+      "stateLabel": "State",
+      "zipCodeLabel": "ZIP code",
+      "saveSuccessMessage": "Your data was updated successfully.",
+      "saveErrorMessage": "We couldn't save your data. Please try again."
+    },
     "loadingMessage": "Loading your services...",
     "loadErrorMessage": "We couldn't load your services.",
     "addTitle": "Add service",
     "nameLabel": "Service name",
     "descriptionLabel": "Description",
     "priceFromLabel": "Price starting at",
+    "currencyLabel": "Currency",
+    "currencies": {
+      "brl": "Real (R$)",
+      "usd": "US Dollar ($)",
+      "eur": "Euro (€)"
+    },
     "durationMinutesLabel": "Duration (minutes)",
     "addButton": "Add",
     "addErrorMessage": "We couldn't add this service. Please try again.",

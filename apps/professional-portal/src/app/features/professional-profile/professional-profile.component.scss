@@ -1,9 +1,5 @@
 .professional-profile {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
   padding: 24px;
-  max-width: 640px;
 
   &__state {
     display: flex;
@@ -11,16 +7,49 @@
     gap: 12px;
   }
 
+  &__services-tab {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding-top: 16px;
+  }
+
+  &__add {
+    width: 100%;
+
+    @media (min-width: 480px) {
+      width: 50%;
+    }
+  }
+
   &__form {
     display: flex;
     flex-direction: column;
     gap: 8px;
-    align-items: flex-start;
+
+    > mat-form-field {
+      width: 100%;
+    }
+  }
+
+  &__form-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+
+    mat-form-field {
+      flex: 1;
+      min-width: 120px;
+    }
   }
 
   &__list {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 1fr;
     gap: 12px;
+
+    @media (min-width: 480px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
   }
 }
