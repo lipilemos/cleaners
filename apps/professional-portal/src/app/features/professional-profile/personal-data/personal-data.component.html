@@ -1,0 +1,116 @@
+<div class="personal-data">
+  @if (loading()) {
+    <div class="personal-data__state" role="status">
+      <mat-progress-spinner mode="indeterminate" diameter="32" />
+      <p>{{ 'professionalProfile.personalData.loadingMessage' | transloco }}</p>
+    </div>
+  } @else if (loadErrorKey(); as errorKey) {
+    <p role="alert">{{ errorKey | transloco }}</p>
+  } @else {
+    <mat-card appearance="outlined">
+      <mat-card-content>
+        <form
+          [formGroup]="form"
+          (ngSubmit)="submit()"
+          class="personal-data__form"
+        >
+          <mat-form-field>
+            <mat-label>{{
+              'professionalProfile.personalData.nameLabel' | transloco
+            }}</mat-label>
+            <input matInput formControlName="name" autocomplete="name" />
+            <app-form-field-error [control]="form.controls.name" />
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>{{
+              'professionalProfile.personalData.emailLabel' | transloco
+            }}</mat-label>
+            <input matInput [value]="email()" disabled />
+          </mat-form-field>
+
+          <app-phone-input formControlName="phone" />
+          <app-form-field-error [control]="form.controls.phone" />
+
+          <h2>
+            {{ 'professionalProfile.personalData.addressTitle' | transloco }}
+          </h2>
+          <div formGroupName="address" class="personal-data__address">
+            <mat-form-field>
+              <mat-label>{{
+                'professionalProfile.personalData.streetLabel' | transloco
+              }}</mat-label>
+              <input
+                matInput
+                formControlName="street"
+                autocomplete="address-line1"
+              />
+              <app-form-field-error
+                [control]="form.controls.address.controls.street"
+              />
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>{{
+                'professionalProfile.personalData.cityLabel' | transloco
+              }}</mat-label>
+              <input
+                matInput
+                formControlName="city"
+                autocomplete="address-level2"
+              />
+              <app-form-field-error
+                [control]="form.controls.address.controls.city"
+              />
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>{{
+                'professionalProfile.personalData.stateLabel' | transloco
+              }}</mat-label>
+              <input
+                matInput
+                formControlName="state"
+                autocomplete="address-level1"
+              />
+              <app-form-field-error
+                [control]="form.controls.address.controls.state"
+              />
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>{{
+                'professionalProfile.personalData.zipCodeLabel' | transloco
+              }}</mat-label>
+              <input
+                matInput
+                formControlName="zipCode"
+                autocomplete="postal-code"
+              />
+              <app-form-field-error
+                [control]="form.controls.address.controls.zipCode"
+              />
+            </mat-form-field>
+          </div>
+
+          @if (saveErrorKey(); as saveError) {
+            <p role="alert">{{ saveError | transloco }}</p>
+          }
+
+          <button
+            mat-flat-button
+            type="submit"
+            color="primary"
+            [disabled]="saving()"
+          >
+            @if (saving()) {
+              {{ 'common.loading' | transloco }}
+            } @else {
+              {{ 'common.saveButton' | transloco }}
+            }
+          </button>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  }
+</div>

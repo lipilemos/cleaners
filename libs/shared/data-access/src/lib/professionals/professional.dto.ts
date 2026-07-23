@@ -1,4 +1,5 @@
 import {
+  Currency,
   Professional,
   ProfessionalReview,
   ProfessionalSummary,
@@ -26,6 +27,7 @@ export interface ProfessionalDetailServiceDto {
   readonly name: string;
   readonly description: string;
   readonly price: number;
+  readonly currency: Currency;
   readonly durationMinutes: number;
 }
 
@@ -47,6 +49,7 @@ export function toProfessionalModel(dto: ProfessionalDetailDto): Professional {
       name: service.name,
       description: service.description,
       priceFrom: service.price,
+      currency: service.currency,
       durationMinutes: service.durationMinutes,
     })),
     reviews: dto.reviews.map(toProfessionalReviewModel),

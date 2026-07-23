@@ -1,5 +1,6 @@
 export * from './lib/user.model';
 export * from './lib/professional.model';
+export * from './lib/professional-account.model';
 export * from './lib/professional-summary.model';
 export * from './lib/service.model';
 export * from './lib/review.model';

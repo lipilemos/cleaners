@@ -1,0 +1,12 @@
+.edit-service-dialog {
+  &__row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+
+    mat-form-field {
+      flex: 1;
+      min-width: 120px;
+    }
+  }
+}
