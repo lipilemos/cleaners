@@ -8,3 +8,7 @@ export * from './lib/login-form/login-form-credentials';
 export * from './lib/register-form/register-form.component';
 export * from './lib/register-form/register-form-credentials';
 export * from './lib/avatar-upload/avatar-upload.component';
+export * from './lib/theme/theme.store';
+export * from './lib/theme-toggle/theme-toggle.component';
+export * from './lib/language-switcher/language-switcher.component';
+export * from './lib/nav-drawer/nav-drawer.component';

@@ -25,6 +25,12 @@
     font-weight: 500;
   }
 
+  &__free-estimate-label {
+    color: var(--mat-sys-on-surface-variant, rgba(0, 0, 0, 0.6));
+    font-size: 0.875rem;
+    margin: 0;
+  }
+
   &__contact {
     margin-top: 8px;
     padding-top: 8px;
@@ -33,5 +39,112 @@
     h3 {
       margin: 0 0 4px;
     }
+  }
+
+  &__calendar-tab {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding-top: 16px;
+  }
+
+  &__calendar-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  &__legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.875rem;
+    color: var(--mat-sys-on-surface-variant, rgba(0, 0, 0, 0.6));
+
+    &::before {
+      content: '';
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex: none;
+    }
+
+    &--pending::before {
+      background: var(--mat-sys-tertiary, #f59e0b);
+    }
+
+    &--confirmed::before {
+      background: var(--mat-sys-primary, #16a34a);
+    }
+
+    &--completed::before {
+      background: var(--mat-sys-outline, #9ca3af);
+    }
+
+    &--cancelled::before {
+      background: var(--mat-sys-error, #dc2626);
+    }
+  }
+
+  &__calendar {
+    // Grande, ocupando toda a largura disponível da aba (pedido explícito: melhor visualização da
+    // agenda completa) — Material dimensiona a tabela do mês em %, então esticar o container também
+    // aumenta proporcionalmente cada célula/dia.
+    width: 98%;
+    border: 1px solid var(--mat-sys-outline-variant, rgba(0, 0, 0, 0.12));
+    border-radius: 4px;
+    --mat-datepicker-calendar-text-size: 1rem;
+    --mat-datepicker-calendar-period-button-text-size: 1.25rem;
+  }
+
+  &__calendar-day-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    h2 {
+      margin: 0;
+    }
+  }
+
+  &__calendar-selected-date {
+    margin: 0;
+    color: var(--mat-sys-on-surface-variant, rgba(0, 0, 0, 0.6));
+  }
+}
+
+// A célula do dia é gerada internamente por MatCalendarBody (não pelo template deste componente), por
+// isso a marcação visual de "tem agendamento" via [dateClass] só alcança esse DOM com ::ng-deep — não
+// há API de conteúdo de célula custom no mat-calendar para evitar isso.
+:host ::ng-deep {
+  .incoming-bookings__calendar-day .mat-calendar-body-cell-content::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+  }
+
+  .incoming-bookings__calendar-day--pending
+    .mat-calendar-body-cell-content::after {
+    background: var(--mat-sys-tertiary, #f59e0b);
+  }
+
+  .incoming-bookings__calendar-day--confirmed
+    .mat-calendar-body-cell-content::after {
+    background: var(--mat-sys-primary, #16a34a);
+  }
+
+  .incoming-bookings__calendar-day--completed
+    .mat-calendar-body-cell-content::after {
+    background: var(--mat-sys-outline, #9ca3af);
+  }
+
+  .incoming-bookings__calendar-day--cancelled
+    .mat-calendar-body-cell-content::after {
+    background: var(--mat-sys-error, #dc2626);
   }
 }

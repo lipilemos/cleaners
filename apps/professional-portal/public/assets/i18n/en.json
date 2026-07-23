@@ -7,13 +7,14 @@
     "title": "Create professional account",
     "loginLink": "Already have an account? Sign in"
   },
+  "shell": {
+    "menuButtonAriaLabel": "Open menu"
+  },
   "portalToolbar": {
-    "welcomeTitle": "Hello, {{name}}!",
     "availabilityLink": "Availability",
     "incomingBookingsLink": "Incoming bookings",
     "reviewsReceivedLink": "Reviews",
-    "professionalProfileLink": "My services",
-    "logoutButton": "Log out"
+    "professionalProfileLink": "My services"
   },
   "availability": {
     "title": "Availability",
@@ -46,8 +47,16 @@
     "title": "Booking requests",
     "loadingMessage": "Loading your bookings...",
     "loadErrorMessage": "We couldn't load your bookings.",
+    "calendarTabLabel": "Calendar",
+    "calendarSelectedDayTitle": "Bookings for the selected day",
+    "calendarEmptyDayMessage": "No bookings on this day.",
+    "calendarLegendPending": "Pending",
+    "calendarLegendConfirmed": "Confirmed",
+    "calendarLegendCompleted": "Completed",
+    "calendarLegendCancelled": "Cancelled",
     "pendingTabLabel": "Pending ({{count}})",
     "emptyPendingMessage": "No pending requests right now.",
+    "freeEstimateLabel": "Free estimate visit",
     "acceptButton": "Accept",
     "rejectButton": "Decline",
     "acceptErrorMessage": "We couldn't accept this booking. Please try again.",

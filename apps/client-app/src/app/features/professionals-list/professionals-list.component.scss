@@ -1,19 +1,9 @@
 .professionals-list__toolbar {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
-  gap: 0.5rem 1rem;
   height: auto;
   min-height: 64px;
   padding-block: 0.5rem;
-}
-
-.professionals-list__spacer {
-  flex: 1 1 auto;
-}
-
-.professionals-list__welcome {
-  font-size: 0.95rem;
 }
 
 .professionals-list {

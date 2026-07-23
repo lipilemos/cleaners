@@ -1,1 +1,27 @@
+@if (isAuthenticated()) {
+<mat-sidenav-container class="app-shell">
+  <mat-sidenav #sidenav mode="over">
+    <app-nav-drawer
+      [userName]="accountName()"
+      profileRoute="/professional-profile"
+      [appVersion]="appVersion"
+      (logout)="logout()"
+    />
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <button
+      mat-icon-button
+      type="button"
+      class="app-shell__menu-trigger"
+      [attr.aria-label]="'shell.menuButtonAriaLabel' | transloco"
+      (click)="sidenav.toggle()"
+    >
+      <mat-icon aria-hidden="true">menu</mat-icon>
+    </button>
+
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+} @else {
 <router-outlet></router-outlet>
+}

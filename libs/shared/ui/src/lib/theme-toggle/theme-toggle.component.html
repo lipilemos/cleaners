@@ -1,0 +1,12 @@
+<button
+  mat-button
+  type="button"
+  class="theme-toggle"
+  [attr.aria-label]="'themeToggle.ariaLabel' | transloco"
+  (click)="toggle()"
+>
+  <mat-icon aria-hidden="true">{{
+    isDark() ? 'dark_mode' : 'light_mode'
+  }}</mat-icon>
+  <span>{{ labelKey() | transloco }}</span>
+</button>

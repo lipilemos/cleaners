@@ -5,6 +5,7 @@ import {
   CalendarMcpService,
 } from '@cleaners/data-access';
 import { Booking } from '@cleaners/models';
+import { toDateKey } from '@cleaners/util';
 import { Subscription } from 'rxjs';
 
 // Estado da feature `incoming-bookings` (T28), injetado no escopo da rota. Reaproveita o mesmo
@@ -51,6 +52,22 @@ export class IncomingBookingsStore implements OnDestroy {
       )
       .sort((a, b) => b.startAt.localeCompare(a.startAt)),
   );
+
+  // Agrupamento por dia local (aba Calendário) — toda a agenda do profissional, sem filtrar por
+  // status, para dar a visão completa que as outras abas (por status) não oferecem sozinhas.
+  readonly bookingsByDayKey = computed(() => {
+    const map = new Map<string, Booking[]>();
+    for (const booking of this._bookings()) {
+      const key = toDateKey(new Date(booking.startAt));
+      const existing = map.get(key);
+      if (existing) {
+        existing.push(booking);
+      } else {
+        map.set(key, [booking]);
+      }
+    }
+    return map;
+  });
 
   load(): void {
     this._loading.set(true);

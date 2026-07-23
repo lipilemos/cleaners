@@ -8,5 +8,10 @@
     "inlineSources": true,
     "types": []
   },
-  "include": ["src/**/*.ts"]
+  "include": ["src/**/*.ts"],
+  "references": [
+    {
+      "path": "../i18n/tsconfig.lib.json"
+    }
+  ]
 }

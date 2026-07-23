@@ -13,7 +13,6 @@ export interface Booking {
   readonly id: string;
   readonly userId: string;
   readonly professionalId: string;
-  readonly serviceId: string;
   readonly startAt: string;
   readonly endAt: string;
   readonly status: BookingStatus;
@@ -22,9 +21,10 @@ export interface Booking {
   readonly customerContact?: BookingCustomerContact;
 }
 
+// Visita de estimativa gratuita (free estimate): não referencia um Service — o profissional visita o
+// local, avalia e informa o preço pessoalmente (ver CLAUDE.md 5.3).
 export interface CreateBookingRequest {
   readonly professionalId: string;
-  readonly serviceId: string;
   readonly startAt: string;
   readonly endAt: string;
   // Gerado no client para permitir retry seguro sem duplicar o booking em caso de falha de rede.

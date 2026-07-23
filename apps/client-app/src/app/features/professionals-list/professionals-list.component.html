@@ -1,20 +1,5 @@
 <mat-toolbar color="primary" class="professionals-list__toolbar">
   <span>{{ 'professionalsList.title' | transloco }}</span>
-  <span class="professionals-list__spacer"></span>
-  <span class="professionals-list__welcome">{{
-    'professionalsList.welcomeTitle' | transloco: { name: accountName() }
-  }}</span>
-  <button
-    mat-icon-button
-    type="button"
-    routerLink="/profile"
-    [attr.aria-label]="'professionalsList.profileLinkAriaLabel' | transloco"
-  >
-    <mat-icon>person</mat-icon>
-  </button>
-  <button mat-stroked-button type="button" color="accent" (click)="logout()">
-    {{ 'professionalsList.logoutButton' | transloco }}
-  </button>
 </mat-toolbar>
 
 <div class="professionals-list">

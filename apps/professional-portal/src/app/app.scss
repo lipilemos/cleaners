@@ -1,0 +1,12 @@
+.app-shell {
+  height: 100vh;
+
+  &__menu-trigger {
+    position: fixed;
+    top: 8px;
+    left: 8px;
+    z-index: 10;
+    background: var(--mat-sys-surface);
+    box-shadow: var(--mat-sys-level1);
+  }
+}

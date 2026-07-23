@@ -1,9 +1,6 @@
 {
   "professionalsList": {
     "title": "Professionals near you",
-    "welcomeTitle": "Hello, {{name}}!",
-    "logoutButton": "Log out",
-    "profileLinkAriaLabel": "My contact details",
     "locationRequestingMessage": "Getting your location...",
     "locationDeniedMessage": "We couldn't access your location automatically. Enter it manually below.",
     "locationUnavailableMessage": "Geolocation isn't supported on this device. Enter it manually below.",
@@ -35,12 +32,16 @@
     "calendarNotConnectedMessage": "This professional hasn't connected their calendar yet. Try another professional."
   },
   "booking": {
-    "title": "Schedule a booking",
+    "title": "Schedule a free estimate visit",
     "loadingMessage": "Loading available time slots...",
     "loadError": "We couldn't load this professional's availability.",
-    "serviceLabel": "Service",
+    "freeEstimateNotice": "This visit is free: the professional will come by, assess the job, and give you a price in person.",
     "slotsTitle": "Available time slots",
     "noSlotsMessage": "No time slots available in the coming days.",
+    "listTabLabel": "List",
+    "calendarTabLabel": "Calendar",
+    "calendarSelectedDayTitle": "Time slots for the selected day",
+    "noSlotsForDayMessage": "No time slots available on this day.",
     "calendarNotConnectedMessage": "This professional hasn't connected their calendar yet. Try another professional.",
     "submitting": "Confirming booking...",
     "pendingMessage": "Your request was sent. Waiting for the professional's confirmation.",
@@ -83,6 +84,7 @@
     "photoErrorMessage": "We couldn't update your photo. Please try again."
   },
   "shell": {
+    "menuButtonAriaLabel": "Open menu",
     "installButton": "Install app",
     "installButtonAriaLabel": "Install CleanersApp on this device",
     "updateAvailableMessage": "A new version is available.",

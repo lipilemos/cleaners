@@ -1,14 +1,41 @@
-@if (pwaInstall.canInstall()) {
-<div class="install-banner">
-  <button
-    mat-stroked-button
-    type="button"
-    [attr.aria-label]="'shell.installButtonAriaLabel' | transloco"
-    (click)="install()"
-  >
-    <mat-icon aria-hidden="true">install_mobile</mat-icon>
-    {{ 'shell.installButton' | transloco }}
-  </button>
-</div>
-}
+@if (isAuthenticated()) {
+<mat-sidenav-container class="app-shell">
+  <mat-sidenav #sidenav mode="over">
+    <app-nav-drawer
+      [userName]="accountName()"
+      profileRoute="/profile"
+      [appVersion]="appVersion"
+      (logout)="logout()"
+    />
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <button
+      mat-icon-button
+      type="button"
+      class="app-shell__menu-trigger"
+      [attr.aria-label]="'shell.menuButtonAriaLabel' | transloco"
+      (click)="sidenav.toggle()"
+    >
+      <mat-icon aria-hidden="true">menu</mat-icon>
+    </button>
+
+    @if (pwaInstall.canInstall()) {
+    <div class="install-banner">
+      <button
+        mat-stroked-button
+        type="button"
+        [attr.aria-label]="'shell.installButtonAriaLabel' | transloco"
+        (click)="install()"
+      >
+        <mat-icon aria-hidden="true">install_mobile</mat-icon>
+        {{ 'shell.installButton' | transloco }}
+      </button>
+    </div>
+    }
+
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+} @else {
 <router-outlet></router-outlet>
+}

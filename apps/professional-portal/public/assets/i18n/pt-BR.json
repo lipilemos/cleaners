@@ -7,13 +7,14 @@
     "title": "Criar conta de profissional",
     "loginLink": "Já tem conta? Entrar"
   },
+  "shell": {
+    "menuButtonAriaLabel": "Abrir menu"
+  },
   "portalToolbar": {
-    "welcomeTitle": "Olá, {{name}}!",
     "availabilityLink": "Disponibilidade",
     "incomingBookingsLink": "Pedidos recebidos",
     "reviewsReceivedLink": "Avaliações",
-    "professionalProfileLink": "Meus serviços",
-    "logoutButton": "Sair"
+    "professionalProfileLink": "Meus serviços"
   },
   "availability": {
     "title": "Disponibilidade",
@@ -46,8 +47,16 @@
     "title": "Pedidos de agendamento",
     "loadingMessage": "Carregando seus agendamentos...",
     "loadErrorMessage": "Não foi possível carregar seus agendamentos.",
+    "calendarTabLabel": "Calendário",
+    "calendarSelectedDayTitle": "Agendamentos do dia selecionado",
+    "calendarEmptyDayMessage": "Nenhum agendamento neste dia.",
+    "calendarLegendPending": "Pendente",
+    "calendarLegendConfirmed": "Confirmado",
+    "calendarLegendCompleted": "Concluído",
+    "calendarLegendCancelled": "Cancelado",
     "pendingTabLabel": "Pendentes ({{count}})",
     "emptyPendingMessage": "Nenhum pedido pendente no momento.",
+    "freeEstimateLabel": "Visita para orçamento gratuito",
     "acceptButton": "Aceitar",
     "rejectButton": "Recusar",
     "acceptErrorMessage": "Não foi possível aceitar este agendamento. Tente novamente.",

@@ -10,7 +10,7 @@ import {
   Professional,
   TimeSlot,
 } from '@cleaners/models';
-import { addDays } from '@cleaners/util';
+import { addDays, toDateKey, toLocalIsoString } from '@cleaners/util';
 import { Subscription, forkJoin } from 'rxjs';
 
 // Estado da feature de agendamento (client-app), ver skill google-calendar-mcp-scheduling. Cuida do
@@ -39,13 +39,28 @@ export class BookingStore implements OnDestroy {
   readonly submitting = this._submitting.asReadonly();
   readonly confirmedBooking = this._confirmedBooking.asReadonly();
 
-  readonly services = computed(() => this._professional()?.services ?? []);
   readonly hasSlots = computed(() => this._slots().length > 0);
   // Status exibido: prioriza a atualização em tempo real via SignalR; cai para o valor da última
   // resposta HTTP enquanto o evento não chega (fallback descrito na skill de agendamento).
   readonly currentStatus = computed(
     () => this._liveStatus() ?? this._confirmedBooking()?.status ?? null,
   );
+
+  // Agrupamento por dia local (aba Calendário) — mesmo padrão de bookingsByDayKey em
+  // IncomingBookingsStore (professional-portal).
+  readonly slotsByDayKey = computed(() => {
+    const map = new Map<string, TimeSlot[]>();
+    for (const slot of this._slots()) {
+      const key = toDateKey(new Date(slot.startAt));
+      const existing = map.get(key);
+      if (existing) {
+        existing.push(slot);
+      } else {
+        map.set(key, [slot]);
+      }
+    }
+    return map;
+  });
 
   load(professionalId: string): void {
     this._loading.set(true);
@@ -58,8 +73,8 @@ export class BookingStore implements OnDestroy {
       professional: this.professionalsService.getById(professionalId),
       slots: this.calendarMcpService.getAvailability(
         professionalId,
-        from.toISOString(),
-        to.toISOString(),
+        toLocalIsoString(from),
+        toLocalIsoString(to),
       ),
     }).subscribe({
       next: ({ professional, slots }) => {
@@ -74,14 +89,13 @@ export class BookingStore implements OnDestroy {
     });
   }
 
-  confirm(professionalId: string, serviceId: string, slot: TimeSlot): void {
+  confirm(professionalId: string, slot: TimeSlot): void {
     this._submitting.set(true);
     this._error.set(null);
 
     this.calendarMcpService
       .createBooking({
         professionalId,
-        serviceId,
         startAt: slot.startAt,
         endAt: slot.endAt,
         // Permite retry seguro sem duplicar o booking em caso de falha de rede (CLAUDE.md/skill agendamento).
@@ -109,7 +123,11 @@ export class BookingStore implements OnDestroy {
     const to = addDays(from, 14);
 
     this.calendarMcpService
-      .getAvailability(professionalId, from.toISOString(), to.toISOString())
+      .getAvailability(
+        professionalId,
+        toLocalIsoString(from),
+        toLocalIsoString(to),
+      )
       .subscribe({
         next: (slots) => this._slots.set(slots),
         // Silencioso: a mensagem de erro da criação já orienta o usuário a tentar novamente.
