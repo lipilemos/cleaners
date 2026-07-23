@@ -21,12 +21,70 @@
   gap: 1rem;
 }
 
+.booking__notice {
+  color: var(--mat-sys-on-surface-variant, rgba(0, 0, 0, 0.6));
+  font-size: 0.875rem;
+}
+
 .booking__slots {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  padding: 0.5rem;
+  margin-top: 0.5rem;
+  // Mostra ~10 horários por vez; o restante rola dentro deste container (barra de rolagem própria) em
+  // vez de esticar a página inteira — cada mat-radio-button ocupa ~3rem (alvo de toque de 48px) + gap.
+  max-height: 34.5rem;
+  overflow-y: auto;
+  border: 1px solid var(--mat-sys-outline-variant, rgba(0, 0, 0, 0.12));
+  border-radius: 4px;
 }
 
 .booking__status {
   font-weight: 600;
+}
+
+.booking__calendar-tab {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding-top: 1rem;
+}
+
+.booking__calendar {
+  width: 100%;
+  border: 1px solid var(--mat-sys-outline-variant, rgba(0, 0, 0, 0.12));
+  border-radius: 4px;
+}
+
+.booking__calendar-day-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  h3 {
+    margin: 0;
+  }
+}
+
+.booking__calendar-selected-date {
+  margin: 0;
+  color: var(--mat-sys-on-surface-variant, rgba(0, 0, 0, 0.6));
+}
+
+// A célula do dia é gerada internamente por MatCalendarBody (não pelo template deste componente), por
+// isso a marcação visual de "tem horário disponível" via [dateClass] só alcança esse DOM com
+// ::ng-deep — mesmo padrão usado em incoming-bookings.component.scss (professional-portal).
+:host ::ng-deep {
+  .booking__calendar-day--available .mat-calendar-body-cell-content::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--mat-sys-primary, #16a34a);
+  }
 }

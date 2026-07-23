@@ -16,6 +16,132 @@
     }
 
     <mat-tab-group>
+      <mat-tab [label]="'incomingBookings.calendarTabLabel' | transloco">
+        <div class="incoming-bookings__calendar-tab">
+          <div class="incoming-bookings__calendar-legend">
+            <span
+              class="incoming-bookings__legend-item incoming-bookings__legend-item--pending"
+            >
+              {{ 'incomingBookings.calendarLegendPending' | transloco }}
+            </span>
+            <span
+              class="incoming-bookings__legend-item incoming-bookings__legend-item--confirmed"
+            >
+              {{ 'incomingBookings.calendarLegendConfirmed' | transloco }}
+            </span>
+            <span
+              class="incoming-bookings__legend-item incoming-bookings__legend-item--completed"
+            >
+              {{ 'incomingBookings.calendarLegendCompleted' | transloco }}
+            </span>
+            <span
+              class="incoming-bookings__legend-item incoming-bookings__legend-item--cancelled"
+            >
+              {{ 'incomingBookings.calendarLegendCancelled' | transloco }}
+            </span>
+          </div>
+
+          <mat-calendar
+            class="incoming-bookings__calendar"
+            [startAt]="selectedDate()"
+            [selected]="selectedDate()"
+            [dateClass]="calendarDayClass"
+            (selectedChange)="onCalendarDaySelected($event)"
+          />
+
+          <div class="incoming-bookings__calendar-day-panel">
+            <h2>
+              {{ 'incomingBookings.calendarSelectedDayTitle' | transloco }}
+            </h2>
+            <p class="incoming-bookings__calendar-selected-date">
+              {{ selectedDate() | translocoDate: { dateStyle: 'full' } }}
+            </p>
+
+            @if (selectedDayBookings().length === 0) {
+              <p>
+                {{ 'incomingBookings.calendarEmptyDayMessage' | transloco }}
+              </p>
+            } @else {
+              <div class="incoming-bookings__list">
+                @for (booking of selectedDayBookings(); track booking.id) {
+                  <mat-card
+                    appearance="outlined"
+                    class="incoming-bookings__card"
+                  >
+                    <mat-card-content>
+                      <p class="incoming-bookings__time-range">
+                        {{
+                          booking.startAt
+                            | translocoDate
+                              : { dateStyle: 'medium', timeStyle: 'short' }
+                        }}
+                        –
+                        {{
+                          booking.endAt | translocoDate: { timeStyle: 'short' }
+                        }}
+                      </p>
+                      <p class="incoming-bookings__free-estimate-label">
+                        {{ 'incomingBookings.freeEstimateLabel' | transloco }}
+                      </p>
+                      <p>
+                        {{ 'incomingBookings.statusLabel' | transloco }}:
+                        {{ statusKey(booking.status) | transloco }}
+                      </p>
+
+                      @if (booking.customerContact; as contact) {
+                        <div class="incoming-bookings__contact">
+                          <h3>
+                            {{ 'incomingBookings.contactTitle' | transloco }}
+                          </h3>
+                          <p>{{ contact.name }}</p>
+                          <a
+                            mat-stroked-button
+                            type="button"
+                            [href]="telHref(contact.phone)"
+                            [attr.aria-label]="
+                              'incomingBookings.callButtonAriaLabel'
+                                | transloco: { name: contact.name }
+                            "
+                          >
+                            <mat-icon>call</mat-icon>
+                            {{ contact.phone }}
+                          </a>
+                        </div>
+                      }
+                    </mat-card-content>
+
+                    @if (booking.status === 'pending') {
+                      <mat-card-actions>
+                        <button
+                          mat-flat-button
+                          type="button"
+                          color="primary"
+                          class="incoming-bookings__accept-button"
+                          [disabled]="store.isProcessing(booking.id)"
+                          (click)="accept(booking)"
+                        >
+                          {{ 'incomingBookings.acceptButton' | transloco }}
+                        </button>
+                        <button
+                          mat-stroked-button
+                          type="button"
+                          color="warn"
+                          class="incoming-bookings__reject-button"
+                          [disabled]="store.isProcessing(booking.id)"
+                          (click)="reject(booking)"
+                        >
+                          {{ 'incomingBookings.rejectButton' | transloco }}
+                        </button>
+                      </mat-card-actions>
+                    }
+                  </mat-card>
+                }
+              </div>
+            }
+          </div>
+        </div>
+      </mat-tab>
+
       <mat-tab
         [label]="
           'incomingBookings.pendingTabLabel'
@@ -37,6 +163,9 @@
                     }}
                     –
                     {{ booking.endAt | translocoDate: { timeStyle: 'short' } }}
+                  </p>
+                  <p class="incoming-bookings__free-estimate-label">
+                    {{ 'incomingBookings.freeEstimateLabel' | transloco }}
                   </p>
                 </mat-card-content>
                 <mat-card-actions>
@@ -84,6 +213,9 @@
                     –
                     {{ booking.endAt | translocoDate: { timeStyle: 'short' } }}
                   </p>
+                  <p class="incoming-bookings__free-estimate-label">
+                    {{ 'incomingBookings.freeEstimateLabel' | transloco }}
+                  </p>
 
                   @if (booking.customerContact; as contact) {
                     <div class="incoming-bookings__contact">
@@ -124,6 +256,9 @@
                         | translocoDate
                           : { dateStyle: 'medium', timeStyle: 'short' }
                     }}
+                  </p>
+                  <p class="incoming-bookings__free-estimate-label">
+                    {{ 'incomingBookings.freeEstimateLabel' | transloco }}
                   </p>
                   <p>
                     {{ 'incomingBookings.statusLabel' | transloco }}:

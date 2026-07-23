@@ -1,7 +1,6 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  computed,
   effect,
   inject,
 } from '@angular/core';
@@ -14,9 +13,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { Router, RouterLink } from '@angular/router';
-import { SessionStore } from '@cleaners/auth';
-import { User } from '@cleaners/models';
+import { Router } from '@angular/router';
 import {
   FormFieldErrorComponent,
   ProfessionalCardComponent,
@@ -48,7 +45,6 @@ const SEARCH_DEBOUNCE_MS = 400;
     MatToolbarModule,
     FormFieldErrorComponent,
     ProfessionalCardComponent,
-    RouterLink,
     TranslocoPipe,
   ],
   templateUrl: './professionals-list.component.html',
@@ -58,14 +54,9 @@ const SEARCH_DEBOUNCE_MS = 400;
 export class ProfessionalsListComponent {
   private readonly formBuilder = inject(FormBuilder);
   private readonly router = inject(Router);
-  private readonly sessionStore = inject<SessionStore<User>>(SessionStore);
 
   protected readonly store = inject(ProfessionalsListStore);
   protected readonly locationStore = inject(LocationStore);
-
-  protected readonly accountName = computed(
-    () => this.sessionStore.account()?.name ?? '',
-  );
 
   // Fallback manual quando a geolocalização automática é negada/indisponível (T21): sem geocoding
   // real, o usuário informa lat/lng diretamente — decisão documentada no resumo da tarefa.
@@ -127,11 +118,5 @@ export class ProfessionalsListComponent {
 
   protected openProfessional(viewModel: ProfessionalCardViewModel): void {
     void this.router.navigate(['/professionals', viewModel.id]);
-  }
-
-  protected logout(): void {
-    this.sessionStore
-      .logout()
-      .subscribe(() => void this.router.navigateByUrl('/login'));
   }
 }

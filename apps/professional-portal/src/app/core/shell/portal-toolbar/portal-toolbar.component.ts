@@ -1,19 +1,14 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  inject,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { Router, RouterLink, RouterLinkActive } from '@angular/router';
-import { SessionStore } from '@cleaners/auth';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 import { TranslocoPipe } from '@jsverse/transloco';
-import { ProfessionalAccount } from '../../session/professional-account';
 
 // Barra de navegação interna do professional-portal, reutilizada por cada feature de topo (T27-T31).
-// Não é um componente de libs/shared/ui: conhece rotas e a sessão específicas deste app, e não é
-// reaproveitável pelo client-app (CLAUDE.md secao 3, "core/ de cada app").
+// Não é um componente de libs/shared/ui: conhece rotas específicas deste app, e não é reaproveitável
+// pelo client-app (CLAUDE.md secao 3, "core/ de cada app"). Saudação e logout foram movidos para o
+// drawer global (app-nav-drawer, montado em App) — aqui ficam só os links de navegação entre as
+// features de topo do portal, que não fazem parte do escopo do drawer.
 @Component({
   selector: 'app-portal-toolbar',
   standalone: true,
@@ -28,18 +23,4 @@ import { ProfessionalAccount } from '../../session/professional-account';
   styleUrl: './portal-toolbar.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PortalToolbarComponent {
-  private readonly router = inject(Router);
-  private readonly sessionStore =
-    inject<SessionStore<ProfessionalAccount>>(SessionStore);
-
-  protected readonly accountName = computed(
-    () => this.sessionStore.account()?.name ?? '',
-  );
-
-  protected logout(): void {
-    this.sessionStore
-      .logout()
-      .subscribe(() => void this.router.navigateByUrl('/login'));
-  }
-}
+export class PortalToolbarComponent {}

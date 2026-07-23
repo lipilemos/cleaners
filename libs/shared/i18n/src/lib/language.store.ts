@@ -4,7 +4,7 @@ import {
   SUPPORTED_LANGUAGES,
   SupportedLanguage,
   isSupportedLanguage,
-} from './supported-languages';
+} from './supported-languages.js';
 
 const STORAGE_KEY = 'cleaners-app-language';
 

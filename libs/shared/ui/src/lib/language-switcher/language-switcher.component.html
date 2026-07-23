@@ -1,0 +1,21 @@
+<div
+  class="language-switcher"
+  role="group"
+  [attr.aria-label]="'common.changeLanguage' | transloco"
+>
+  @for (option of languageOptions; track option.code) {
+    <button
+      mat-icon-button
+      type="button"
+      class="language-switcher__flag"
+      [class.language-switcher__flag--active]="
+        languageStore.current() === option.code
+      "
+      [attr.aria-label]="option.label"
+      [attr.aria-pressed]="languageStore.current() === option.code"
+      (click)="selectLanguage(option)"
+    >
+      <span aria-hidden="true">{{ option.flag }}</span>
+    </button>
+  }
+</div>

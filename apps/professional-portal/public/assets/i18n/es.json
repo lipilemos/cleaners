@@ -7,13 +7,14 @@
     "title": "Crear cuenta de profesional",
     "loginLink": "¿Ya tienes cuenta? Iniciar sesión"
   },
+  "shell": {
+    "menuButtonAriaLabel": "Abrir menú"
+  },
   "portalToolbar": {
-    "welcomeTitle": "¡Hola, {{name}}!",
     "availabilityLink": "Disponibilidad",
     "incomingBookingsLink": "Pedidos recibidos",
     "reviewsReceivedLink": "Reseñas",
-    "professionalProfileLink": "Mis servicios",
-    "logoutButton": "Cerrar sesión"
+    "professionalProfileLink": "Mis servicios"
   },
   "availability": {
     "title": "Disponibilidad",
@@ -46,8 +47,16 @@
     "title": "Pedidos de reserva",
     "loadingMessage": "Cargando tus reservas...",
     "loadErrorMessage": "No pudimos cargar tus reservas.",
+    "calendarTabLabel": "Calendario",
+    "calendarSelectedDayTitle": "Reservas del día seleccionado",
+    "calendarEmptyDayMessage": "No hay reservas en este día.",
+    "calendarLegendPending": "Pendiente",
+    "calendarLegendConfirmed": "Confirmada",
+    "calendarLegendCompleted": "Completada",
+    "calendarLegendCancelled": "Cancelada",
     "pendingTabLabel": "Pendientes ({{count}})",
     "emptyPendingMessage": "No hay pedidos pendientes por el momento.",
+    "freeEstimateLabel": "Visita de presupuesto gratuito",
     "acceptButton": "Aceptar",
     "rejectButton": "Rechazar",
     "acceptErrorMessage": "No pudimos aceptar esta reserva. Inténtalo de nuevo.",

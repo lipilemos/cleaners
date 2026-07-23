@@ -1,9 +1,6 @@
 {
   "professionalsList": {
     "title": "Profesionales cerca de ti",
-    "welcomeTitle": "¡Hola, {{name}}!",
-    "logoutButton": "Cerrar sesión",
-    "profileLinkAriaLabel": "Mis datos",
     "locationRequestingMessage": "Obteniendo tu ubicación...",
     "locationDeniedMessage": "No pudimos acceder a tu ubicación automáticamente. Ingrésala manualmente abajo.",
     "locationUnavailableMessage": "La geolocalización no es compatible con este dispositivo. Ingrésala manualmente abajo.",
@@ -35,12 +32,16 @@
     "calendarNotConnectedMessage": "Este profesional aún no conectó su agenda. Prueba con otro profesional."
   },
   "booking": {
-    "title": "Reservar horario",
+    "title": "Agendar visita de presupuesto gratuito",
     "loadingMessage": "Cargando horarios disponibles...",
     "loadError": "No pudimos cargar la disponibilidad de este profesional.",
-    "serviceLabel": "Servicio",
+    "freeEstimateNotice": "Esta visita es gratuita: el profesional va al lugar, evalúa el trabajo y te da el presupuesto en persona.",
     "slotsTitle": "Horarios disponibles",
     "noSlotsMessage": "No hay horarios disponibles en los próximos días.",
+    "listTabLabel": "Lista",
+    "calendarTabLabel": "Calendario",
+    "calendarSelectedDayTitle": "Horarios del día seleccionado",
+    "noSlotsForDayMessage": "No hay horarios disponibles en este día.",
     "calendarNotConnectedMessage": "Este profesional aún no conectó su agenda. Prueba con otro profesional.",
     "submitting": "Confirmando reserva...",
     "pendingMessage": "Tu solicitud fue enviada. Esperando la confirmación del profesional.",
@@ -83,6 +84,7 @@
     "photoErrorMessage": "No pudimos actualizar tu foto. Inténtalo de nuevo."
   },
   "shell": {
+    "menuButtonAriaLabel": "Abrir menú",
     "installButton": "Instalar aplicación",
     "installButtonAriaLabel": "Instalar CleanersApp en este dispositivo",
     "updateAvailableMessage": "Hay una nueva versión disponible.",

@@ -1,0 +1,36 @@
+<div class="nav-drawer">
+  <p class="nav-drawer__greeting">
+    {{ 'navDrawer.greeting' | transloco: { name: userName() } }}
+  </p>
+
+  <a
+    mat-button
+    type="button"
+    class="nav-drawer__item"
+    [routerLink]="profileRoute()"
+    [attr.aria-label]="'navDrawer.profileLinkAriaLabel' | transloco"
+  >
+    <mat-icon aria-hidden="true">person</mat-icon>
+    <span>{{ 'navDrawer.profileLink' | transloco }}</span>
+  </a>
+
+  <app-theme-toggle class="nav-drawer__item" />
+
+  <div class="nav-drawer__spacer"></div>
+
+  <button
+    mat-button
+    type="button"
+    class="nav-drawer__item nav-drawer__logout"
+    (click)="logout.emit()"
+  >
+    <mat-icon aria-hidden="true">logout</mat-icon>
+    <span>{{ 'navDrawer.logoutButton' | transloco }}</span>
+  </button>
+
+  <app-language-switcher />
+
+  <p class="nav-drawer__version">
+    {{ 'navDrawer.versionLabel' | transloco: { version: appVersion() } }}
+  </p>
+</div>

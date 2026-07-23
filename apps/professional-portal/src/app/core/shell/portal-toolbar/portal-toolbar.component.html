@@ -1,8 +1,4 @@
 <mat-toolbar color="primary" class="portal-toolbar">
-  <span class="portal-toolbar__welcome">{{
-    'portalToolbar.welcomeTitle' | transloco: { name: accountName() }
-  }}</span>
-
   <nav class="portal-toolbar__nav">
     <a
       mat-button
@@ -37,10 +33,4 @@
       {{ 'portalToolbar.professionalProfileLink' | transloco }}
     </a>
   </nav>
-
-  <span class="portal-toolbar__spacer"></span>
-
-  <button mat-stroked-button type="button" color="accent" (click)="logout()">
-    {{ 'portalToolbar.logoutButton' | transloco }}
-  </button>
 </mat-toolbar>

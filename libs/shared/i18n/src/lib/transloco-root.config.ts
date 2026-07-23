@@ -5,7 +5,7 @@ import {
   TranslocoLoader,
   provideTransloco,
 } from '@jsverse/transloco';
-import { SUPPORTED_LANGUAGES } from './supported-languages';
+import { SUPPORTED_LANGUAGES } from './supported-languages.js';
 
 @Injectable({ providedIn: 'root' })
 export class TranslocoHttpLoader implements TranslocoLoader {

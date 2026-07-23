@@ -2,6 +2,10 @@
 // Nunca definir um tema divergente por app: qualquer ajuste de cor/tipografia/densidade acontece aqui.
 @use '@angular/material' as mat;
 
+// Tema claro é a base. Escuro se aplica por preferência do sistema (quando o usuário ainda não
+// escolheu manualmente, ver ThemeStore em libs/shared/ui/theme.store.ts) ou pela classe
+// .theme-dark no <html> (escolha explícita, sobrepõe o sistema). .theme-light é o "escape hatch"
+// para forçar claro mesmo com o sistema em modo escuro.
 html {
   @include mat.theme(
     (
@@ -16,6 +20,20 @@ html {
   );
 
   @media (prefers-color-scheme: dark) {
+    &:not(.theme-light) {
+      @include mat.theme(
+        (
+          color: (
+            theme-type: dark,
+            primary: mat.$azure-palette,
+            tertiary: mat.$blue-palette,
+          ),
+        )
+      );
+    }
+  }
+
+  &.theme-dark {
     @include mat.theme(
       (
         color: (

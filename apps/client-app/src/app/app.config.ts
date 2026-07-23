@@ -4,6 +4,7 @@ import {
   isDevMode,
   provideBrowserGlobalErrorListeners,
 } from '@angular/core';
+import { provideNativeDateAdapter } from '@angular/material/core';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideRouter } from '@angular/router';
 import { provideServiceWorker } from '@angular/service-worker';
@@ -25,6 +26,9 @@ export const appConfig: ApplicationConfig = {
     provideBrowserGlobalErrorListeners(),
     provideRouter(appRoutes),
     provideAnimationsAsync(),
+    // Requerido pelo mat-calendar da aba Calendário de BookingComponent (locale sincronizado com
+    // LanguageStore em tempo de execução, mesmo padrão do professional-portal).
+    provideNativeDateAdapter(),
     provideHttpClient(
       withInterceptors([
         credentialsInterceptor,

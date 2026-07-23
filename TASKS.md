@@ -25,8 +25,8 @@ O backend (.NET) tem seu próprio plano e repositório — ver referência na se
 | T10 | Interceptors `core/interceptors`: `credentials.interceptor.ts`, `csrf.interceptor.ts`, `error.interceptor.ts` (replicados nos dois apps) | P0         | T09        |
 | T11 | `ProfessionalsService` em `libs/shared/data-access` — 🔗 **API** `GET /professionals?lat&lng`                                            | P0         | T07, T08   |
 | T12 | `ReviewsService` em `libs/shared/data-access` — 🔗 **API** `GET/POST /reviews`                                                           | P1         | T07, T08   |
-| T13 | `BookingsService` em `libs/shared/data-access` — 🔗 **API** `GET/POST /bookings`                                                         | P0         | T07, T08   |
-| T14 | `CalendarMcpService` em `libs/shared/data-access` (conexão de agenda, disponibilidade) — 🔗 **API** endpoints MCP                        | P1         | T07, T08   |
+| T13 | `BookingsService` em `libs/shared/data-access` — 🔗 **API** `GET/POST /bookings`                                                         | ✅         | T07, T08   |
+| T14 | `CalendarMcpService` em `libs/shared/data-access` (conexão de agenda, disponibilidade) — 🔗 **API** endpoints MCP                        | ✅         | T07, T08   |
 
 ## Fase 2 — Design system compartilhado (`libs/shared/ui`)
 
@@ -51,21 +51,21 @@ O backend (.NET) tem seu próprio plano e repositório — ver referência na se
 | --- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | ------------- |
 | T21 | Feature `professionals-list`: busca por geolocalização + fallback manual de endereço, ordenação por proximidade                                                                                                                                          | P0         | T11, T16, T20 |
 | T22 | Feature `professional-detail`: perfil, serviços, lista de avaliações — `GET /professionals/{id}` retorna `ProfessionalDetailDto` com `reviews[]` embutidas (não depende mais de `ReviewsService`/T12 para esta tela)                                     | ✅         | T11, T15      |
-| T23 | Feature `booking` (cliente): consulta disponibilidade e cria `Booking` (skill `google-calendar-mcp-scheduling`)                                                                                                                                          | P0         | T13, T14, T22 |
+| T23 | Feature `booking` (cliente): consulta disponibilidade e cria `Booking` (skill `google-calendar-mcp-scheduling`) — visita de estimativa gratuita, sem seleção de `Service` (decisão registrada, ver CLAUDE.md 5.3)                                        | ✅         | T13, T14, T22 |
 | T24 | Feature `reviews` (cliente): avaliar profissional após serviço concluído                                                                                                                                                                                 | P1         | T12, T23      |
 | T25 | Feature `user-profile`: cadastro/edição de dados de contato (telefone, endereço) + upload de foto de perfil (`AvatarUploadComponent`, `libs/shared/ui`) — atenção a dados sensíveis (seção 5.4) — 🔗 **API** `GET/PUT /users/me`, `POST /users/me/photo` | ✅         | T20           |
-| T26 | Atualização em tempo real do status de `Booking` via SignalR no `client-app`                                                                                                                                                                             | P1         | T23           |
+| T26 | Atualização em tempo real do status de `Booking` via SignalR no `client-app`                                                                                                                                                                             | ✅         | T23           |
 
 ## Fase 5 — `professional-portal`: fluxo do profissional
 
 | ID  | Tarefa                                                                                                                                                         | Prioridade | Depende de |
 | --- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | ---------- |
-| T27 | Feature `availability`: conectar Google Agenda + definir regras de disponibilidade (agente `calendar-mcp-integrator`)                                          | P0         | T14, T20   |
-| T28 | Feature `incoming-bookings`: listar, aceitar/recusar agendamentos                                                                                              | P0         | T13, T27   |
-| T29 | Disparo de contato pós-confirmação (telefone do `User`, nunca exposto antes) — 🔗 **API** endpoint dedicado                                                    | P0         | T28        |
+| T27 | Feature `availability`: conectar Google Agenda + definir regras de disponibilidade (agente `calendar-mcp-integrator`)                                          | ✅         | T14, T20   |
+| T28 | Feature `incoming-bookings`: listar, aceitar/recusar agendamentos                                                                                              | ✅         | T13, T27   |
+| T29 | Disparo de contato pós-confirmação (telefone do `User`, nunca exposto antes) — 🔗 **API** `BookingDto.customerContact`, condicional a `Confirmed`/`Completed`  | ✅         | T28        |
 | T30 | Feature `reviews-received`: histórico de avaliações recebidas                                                                                                  | P2         | T12, T20   |
 | T31 | Feature `professional-profile`: gerenciar serviços oferecidos (`Service[]`) — 🔗 **API** `GET /professionals/me`, `POST/PUT/DELETE /professionals/me/services` | ✅         | T20        |
-| T32 | Atualização em tempo real de novos pedidos de agendamento via SignalR no `professional-portal`                                                                 | P1         | T28        |
+| T32 | Atualização em tempo real de novos pedidos de agendamento via SignalR no `professional-portal`                                                                 | ✅         | T28        |
 
 ## Fase 6 — Qualidade, PWA e acessibilidade
 

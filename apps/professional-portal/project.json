@@ -59,6 +59,16 @@
             "glob": "**/*",
             "input": "libs/shared/ui/src/lib/avatar-upload/i18n",
             "output": "assets/i18n/avatarUpload"
+          },
+          {
+            "glob": "**/*",
+            "input": "libs/shared/ui/src/lib/theme-toggle/i18n",
+            "output": "assets/i18n/themeToggle"
+          },
+          {
+            "glob": "**/*",
+            "input": "libs/shared/ui/src/lib/nav-drawer/i18n",
+            "output": "assets/i18n/navDrawer"
           }
         ],
         "styles": ["apps/professional-portal/src/styles.scss"]

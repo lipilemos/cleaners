@@ -1,0 +1,7 @@
+{
+  "greeting": "¡Hola, {{name}}!",
+  "profileLink": "Mi perfil",
+  "profileLinkAriaLabel": "Ir a mi perfil",
+  "logoutButton": "Cerrar sesión",
+  "versionLabel": "Versión {{version}}"
+}

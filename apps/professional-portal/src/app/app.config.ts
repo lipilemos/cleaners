@@ -3,6 +3,7 @@ import {
   ApplicationConfig,
   provideBrowserGlobalErrorListeners,
 } from '@angular/core';
+import { provideNativeDateAdapter } from '@angular/material/core';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideRouter } from '@angular/router';
 import { REGISTER_PATH, provideSessionBootstrap } from '@cleaners/auth';
@@ -23,6 +24,9 @@ export const appConfig: ApplicationConfig = {
     provideBrowserGlobalErrorListeners(),
     provideRouter(appRoutes),
     provideAnimationsAsync(),
+    // Requerido pelo mat-calendar da aba Calendário de incoming-bookings (locale sincronizado com
+    // LanguageStore em tempo de execução, ver IncomingBookingsComponent).
+    provideNativeDateAdapter(),
     provideHttpClient(
       withInterceptors([
         credentialsInterceptor,
